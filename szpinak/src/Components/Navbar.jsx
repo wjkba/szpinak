@@ -1,4 +1,4 @@
-function Navbar() {
+function Navbar({ handleToggleMenu }) {
   return (
     <div className="">
       <div className="flex w-full justify-between items-center p-4 bg-szpgray">
@@ -6,7 +6,7 @@ function Navbar() {
           <img src="/images/icon-spinach.png" alt="" />
           <p className="text-lg font-semibold">szpinak</p>
         </div>
-        <div>
+        <div onClick={handleToggleMenu} className="cursor-pointer">
           <i className="fa-solid fa-bars fa-lg"></i>
         </div>
       </div>

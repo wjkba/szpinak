@@ -1,9 +1,9 @@
-function RecipeBar() {
+function Recipe() {
   return (
-    <div className="shadow-md rounded-md">
+    <div className="hover:scale-105 transition-transform cursor-pointer shadow-md rounded-md">
       <div>
-        <div>
-          <img src="/images/sample-szpinak.png" alt="" />
+        <div className="">
+          <img className="rounded-md" src="/images/sample-szpinak.png" alt="" />
         </div>
         <div className="p-2 pt-2">
           <p className="font-bold mb-1">Szpinak dobry</p>
@@ -24,4 +24,4 @@ function RecipeBar() {
   );
 }
 
-export default RecipeBar;
+export default Recipe;

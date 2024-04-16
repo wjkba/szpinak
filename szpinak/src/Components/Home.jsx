@@ -1,8 +1,11 @@
-import RecipeBar from "./RecipeBar";
+import MenuModal from "./MenuModal";
+import Recipe from "./Recipe";
+import { useState } from "react";
+
 function Home() {
   return (
-    <>
-      <section id="introduction" className="max-w-[450px] mb-8">
+    <div className="max-w-[450px] p-2">
+      <section id="introduction" className="mb-8">
         <div className="">
           <div className="grid place-items-center mb-4">
             <img src="/images/illustration.svg" alt="" />
@@ -18,15 +21,28 @@ function Home() {
           </div>
         </div>
       </section>
-      <section id="newest">
-        <div className="flex justify-center flex-wrap gap-2">
-          <RecipeBar />
-          <RecipeBar />
-          <RecipeBar />
-          <RecipeBar />
+      <section id="newest" className="mb-12">
+        <h2 className="text-2xl font mb-2">Our newest recipes:</h2>
+        <div className="flex justify-start gap-4 w-full">
+          <Recipe />
+          <Recipe />
         </div>
       </section>
-    </>
+      <section id="popular" className="mb-12">
+        <h2 className="text-2xl mb-2">Trending recipes:</h2>
+        <div className="flex justify-start gap-4 w-full">
+          <Recipe />
+          <Recipe />
+        </div>
+      </section>
+      <section id="recipes" className="">
+        <h2 className="text-2xl mb-2">Recipes:</h2>
+        <div className="flex justify-start gap-4 w-full">
+          <Recipe />
+          <Recipe />
+        </div>
+      </section>
+    </div>
   );
 }
 
