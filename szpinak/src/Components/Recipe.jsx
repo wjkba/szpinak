@@ -1,6 +1,6 @@
 function Recipe() {
   return (
-    <div className="hover:scale-105 transition-transform cursor-pointer shadow-md rounded-md">
+    <div className="hover:scale-95 scale-90 transition-transform cursor-pointer shadow-md rounded-md">
       <div>
         <div className="">
           <img className="rounded-md" src="/images/sample-szpinak.png" alt="" />

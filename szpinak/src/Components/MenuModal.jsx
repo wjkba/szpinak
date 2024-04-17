@@ -1,13 +1,13 @@
 export default function MenuModal({ handleToggleMenu, isMenu }) {
   return (
-    <div className=" top-0 fixed w-screen h-screen bg-szpgray">
+    <div className=" top-0 fixed z-50 w-screen h-screen bg-szpgray">
       <div className="mb-12">
         <div className="flex w-full justify-between items-center p-4 bg-szpgray">
           <div className="flex gap-2 items-center">
             <img src="/images/icon-spinach.png" alt="" />
             <p className="text-lg font-semibold">szpinak</p>
           </div>
-          <div onClick={handleToggleMenu} className="cursor-pointer">
+          <div onClick={handleToggleMenu} className="cursor-pointer mr-4">
             <i className="fa-solid fa-x fa-lg"></i>
           </div>
         </div>

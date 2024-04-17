@@ -1,3 +1,4 @@
+import Carousel from "./Carousel";
 import MenuModal from "./MenuModal";
 import Recipe from "./Recipe";
 import { useState } from "react";
@@ -23,24 +24,15 @@ function Home() {
       </section>
       <section id="newest" className="mb-12">
         <h2 className="text-2xl font mb-2">Our newest recipes:</h2>
-        <div className="flex justify-start gap-4 w-full">
-          <Recipe />
-          <Recipe />
-        </div>
+        <Carousel />
       </section>
       <section id="popular" className="mb-12">
         <h2 className="text-2xl mb-2">Trending recipes:</h2>
-        <div className="flex justify-start gap-4 w-full">
-          <Recipe />
-          <Recipe />
-        </div>
+        <Carousel />
       </section>
       <section id="recipes" className="">
         <h2 className="text-2xl mb-2">Recipes:</h2>
-        <div className="flex justify-start gap-4 w-full">
-          <Recipe />
-          <Recipe />
-        </div>
+        <Carousel />
       </section>
     </div>
   );
