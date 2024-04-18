@@ -16,9 +16,13 @@ export default function MenuModal({ handleToggleMenu, isMenu }) {
       </div>
       <div className="first-letter:">
         <div className="grid place-items-center gap-6 text-3xl">
-          <p className="hover:font-medium cursor-pointer">recipes</p>
-          <p className="hover:font-medium cursor-pointer">popular</p>
-          <p className="hover:font-medium cursor-pointer">about</p>
+          <Link to="/recipes" className="hover:font-medium cursor-pointer">
+            recipes
+          </Link>
+          {/* <p className="hover:font-medium cursor-pointer">popular</p> */}
+          <Link to="/about" className="hover:font-medium cursor-pointer">
+            about
+          </Link>
           <Link to="/login" className="hover:font-medium cursor-pointer">
             login
           </Link>

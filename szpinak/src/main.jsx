@@ -7,6 +7,8 @@ import Home from "./Components/Home.jsx";
 import Login from "./Components/Login.jsx";
 import Recipe from "./Components/Recipe.jsx";
 import NotFound from "./Components/404.jsx";
+import RecipesPage from "./Components/RecipesPage.jsx";
+import AboutPage from "./Components/AboutPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
   {
     path: "/recipe",
     element: <Recipe />,
+  },
+  {
+    path: "/recipes",
+    element: <RecipesPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
   },
 ]);
 
