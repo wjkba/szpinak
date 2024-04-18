@@ -6,11 +6,13 @@ import "./index.css";
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login.jsx";
 import Recipe from "./Components/Recipe.jsx";
+import NotFound from "./Components/404.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
+    errorElement: <NotFound />,
   },
   {
     path: "/login",
