@@ -7,6 +7,9 @@ export default {
         szpgray: "#F4F4F4",
         szpgreen: "#82B536",
       },
+      screens: {
+        xs: { max: "350px" },
+      },
     },
   },
   plugins: [],

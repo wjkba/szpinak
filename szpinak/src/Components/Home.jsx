@@ -1,6 +1,5 @@
 import Carousel from "./Carousel";
 import MenuModal from "./MenuModal";
-import Recipe from "./Recipe";
 import { useState } from "react";
 
 function Home() {
@@ -12,10 +11,10 @@ function Home() {
             <img src="/images/illustration.svg" alt="" />
           </div>
           <div>
-            <h1 className="text-5xl font-bold mb-4">
+            <h1 className="xs:text-4xl text-5xl font-bold mb-4">
               Szpinak dobry bardzo, <span className="text-szpgreen">mniam</span>
             </h1>
-            <p className="text-lg leading-tight max-w-[25rem]">
+            <p className="xs:text-base text-lg leading-tight max-w-[25rem]">
               Szpinak ipsum dolor sit amet, consectetur adipiscing elit. Cursus
               imperdiet sed id elementum.
             </p>

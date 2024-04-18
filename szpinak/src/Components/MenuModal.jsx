@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function MenuModal({ handleToggleMenu, isMenu }) {
   return (
     <div className=" top-0 fixed z-50 w-screen h-screen bg-szpgray">
@@ -7,7 +9,7 @@ export default function MenuModal({ handleToggleMenu, isMenu }) {
             <img src="/images/icon-spinach.png" alt="" />
             <p className="text-lg font-semibold">szpinak</p>
           </div>
-          <div onClick={handleToggleMenu} className="cursor-pointer mr-4">
+          <div onClick={handleToggleMenu} className="cursor-pointer">
             <i className="fa-solid fa-x fa-lg"></i>
           </div>
         </div>
@@ -17,7 +19,9 @@ export default function MenuModal({ handleToggleMenu, isMenu }) {
           <p className="hover:font-medium cursor-pointer">recipes</p>
           <p className="hover:font-medium cursor-pointer">popular</p>
           <p className="hover:font-medium cursor-pointer">about</p>
-          <p className="hover:font-medium cursor-pointer">login</p>
+          <Link to="/login" className="hover:font-medium cursor-pointer">
+            login
+          </Link>
         </div>
       </div>
     </div>
