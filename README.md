@@ -1,4 +1,3 @@
 work in progress recipe app
 
-
-<img  src="/preview/home--mobile.png">
+<img  src="/preview/home--desktop.png">
