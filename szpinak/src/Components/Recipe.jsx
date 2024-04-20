@@ -1,6 +1,9 @@
 import Navbar from "./Navbar";
+import Carousel from "./Carousel";
+import { useNavigate } from "react-router-dom";
 
 export default function Recipe() {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -8,6 +11,14 @@ export default function Recipe() {
         <div className="max-w-[450px] w-full p-2">
           <section id="recipe__info" className="mb-8">
             <div className="flex flex-col">
+              <div className="p-4 pl-0">
+                <button
+                  className="bg-szpgray min-w-[5rem] p-1 rounded cursor-pointer"
+                  onClick={() => navigate(-1)}
+                >
+                  <i className="fa-solid fa-arrow-left"></i>
+                </button>
+              </div>
               <div className="grid place-items-center mb-4">
                 <img
                   className="rounded-lg  w-full"
@@ -61,7 +72,7 @@ export default function Recipe() {
                   <p>share</p>
                 </button>
                 <button className="text-[#404040] flex gap-2 items-center">
-                  <i class=" fa-solid fa-print"></i>
+                  <i className=" fa-solid fa-print"></i>
                   <p>print</p>
                 </button>
               </div>
@@ -85,7 +96,7 @@ export default function Recipe() {
               </ul>
             </div>
           </section>
-          <section id="recipe__instructions" className="mb-8">
+          <section id="recipe__instructions" className="mb-12">
             <h2 className=" font-bold text-lg">Instructions</h2>
             <ol className=" list-decimal pl-4">
               <li className="font-semibold">Cook the Pasta</li>
@@ -126,6 +137,10 @@ export default function Recipe() {
                 immediately, portioning into bowls or onto plates.
               </p>
             </ol>
+          </section>
+          <section id="trending" className="mb-12">
+            <h2 className="text-2xl mb-2">Trending recipes:</h2>
+            <Carousel />
           </section>
         </div>
       </div>

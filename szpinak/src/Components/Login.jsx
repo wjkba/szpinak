@@ -4,7 +4,7 @@
 //   - nie dodawaj register dopoki nie skonczys css
 
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 
 //   - skopiuj login na register
 export default function Login() {
@@ -20,17 +20,30 @@ export default function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <>
-      <div className="grid place-items-center bg-szpgray min-h-screen">
-        <div className="h-screen rounded gird place-content-center  w-full bg-white p-4">
+      <div className="flex w-full justify-between items-center p-4 pl-0 bg-szpgray">
+        <button
+          className="bg-szpgray min-w-[5rem] rounded cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <i className="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div className="grid place-items-center bg-szpgray ">
+        <div className="h-[90vh] rounded gird place-content-center  w-full bg-white p-4">
           <div className="grid place-items-center">
             <div className="mb-8">
               <img src="/images/szpinak-logo-login.png" alt="" />
             </div>
-
-            <div className="grid gap-2 place-items-center">
+            <form
+              onSubmit={handleSubmit}
+              className="grid gap-2 place-items-center"
+            >
               <div className="grid gap-2 mb-4">
                 <Message msg={message} color={color} />
                 <input
@@ -47,12 +60,13 @@ export default function Login() {
               </div>
 
               <button
+                type="submit"
                 onClick={placeholderHandleLogin}
                 className="rounded p-2 bg-[#3F3D56] text-white w-full"
               >
                 Login
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
