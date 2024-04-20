@@ -16,18 +16,22 @@ export default function Home() {
     <>
       <Navbar />
       <div className="grid place-items-center">
-        <div className="max-w-[450px] p-2">
-          <section id="introduction" className="mb-8">
-            <div className="">
+        <div className="max-w-[450px] lg:max-w-[1300px] lg:pl-[120px] lg:pr-[120px]">
+          <section id="introduction" className="mt-8 mb-8">
+            <div className="lg:flex flex-row-reverse items-center justify-between ">
               <div className="grid place-items-center mb-4">
-                <img src="/images/illustration.svg" alt="" />
+                <img
+                  className="lg:min-w-[20rem]"
+                  src="/images/illustration.svg"
+                  alt=""
+                />
               </div>
-              <div>
+              <div className="max-w-[25rem]">
                 <h1 className="xs:text-4xl text-5xl font-bold mb-4">
                   Szpinak dobry bardzo,{" "}
                   <span className="text-szpgreen">mniam</span>
                 </h1>
-                <p className="xs:text-base text-lg leading-tight max-w-[25rem]">
+                <p className="xs:text-base text-lg leading-tight">
                   Szpinak ipsum dolor sit amet, consectetur adipiscing elit.
                   Cursus imperdiet sed id elementum.
                 </p>

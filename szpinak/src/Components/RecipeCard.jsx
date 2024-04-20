@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 export default function RecipeCard({ title, image, rating, time }) {
   return (
-    <div className="hover:scale-95 scale-90 transition-transform cursor-pointer shadow-md rounded-md">
+    <div className="hover:scale-95  scale-90 transition-transform cursor-pointer shadow-md rounded-md">
       <Link to={"/recipe"}>
         <div>
-          <img className="rounded-md" src={image} alt="" />
+          <img className="lg:max-h-[20rem] rounded-md" src={image} alt="" />
         </div>
         <div className="p-2 pt-2">
           <p className="font-bold mb-1">{title}</p>

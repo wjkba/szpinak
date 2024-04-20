@@ -35,7 +35,7 @@ export default function Login() {
         </button>
       </div>
       <div className="grid place-items-center bg-szpgray ">
-        <div className="h-[90vh] rounded gird place-content-center  w-full bg-white p-4">
+        <div className="h-screen rounded gird place-content-center  w-full bg-white p-4">
           <div className="grid place-items-center">
             <div className="mb-8">
               <img src="/images/szpinak-logo-login.png" alt="" />
