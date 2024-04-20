@@ -6,7 +6,7 @@ export default function Carousel({ recipes = [] }) {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 4.5,
     slidesToScroll: 1,
     swipe: true,
     swipeToSlide: true,
@@ -31,7 +31,7 @@ export default function Carousel({ recipes = [] }) {
   if (recipes != []) {
     return (
       <Slider
-        className="-translate-x-2 lg:max-w-[80vw]  max-w-[98vw]"
+        className="lg:-translate-x-3 -translate-x-2 lg:max-w-[80vw]  max-w-[98vw]"
         {...settings_x}
       >
         {recipes.map((recipe) => (

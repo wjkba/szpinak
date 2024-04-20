@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import Carousel from "./Carousel";
 import { useNavigate } from "react-router-dom";
+import { displayRating } from "./RecipeCard";
 
 export default function Recipe() {
   const navigate = useNavigate();
@@ -8,18 +9,18 @@ export default function Recipe() {
     <>
       <Navbar />
       <div className="grid place-items-center">
-        <div className="max-w-[450px] w-full p-2">
+        <div className="max-w-[450px] lg:max-w-[1300px] lg:px-[120px] w-full p-2">
           <section id="recipe__info" className="mb-8">
-            <div className="flex flex-col">
-              <div className="p-4 pl-0">
-                <button
-                  className="bg-szpgray min-w-[5rem] p-1 rounded cursor-pointer"
-                  onClick={() => navigate(-1)}
-                >
-                  <i className="fa-solid fa-arrow-left"></i>
-                </button>
-              </div>
-              <div className="grid place-items-center mb-4">
+            <div className="p-4 pl-0">
+              <button
+                className="bg-szpgray min-w-[5rem] p-1 rounded cursor-pointer"
+                onClick={() => navigate(-1)}
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+              </button>
+            </div>
+            <div className="lg:flex lg:gap-10">
+              <div className=" grid place-items-center mb-4 lg:min-w-[480px]">
                 <img
                   className="rounded-lg  w-full"
                   src="/images/sample-szpinak.png"
@@ -27,61 +28,43 @@ export default function Recipe() {
                 />
               </div>
               <div>
-                <h2 className="text-3xl font-semibold mb-2">Szpinak dobry</h2>
-                <div className="flex  gap-[2px] mb-2">
-                  <img
-                    className="min-w-[1.2rem]"
-                    src="/images/sample-star.svg"
-                    alt=""
-                  />
-                  <img
-                    className="min-w-[1.2rem]"
-                    src="/images/sample-star.svg"
-                    alt=""
-                  />
-                  <img
-                    className="min-w-[1.2rem]"
-                    src="/images/sample-star.svg"
-                    alt=""
-                  />
-                  <img
-                    className="min-w-[1.2rem]"
-                    src="/images/sample-star.svg"
-                    alt=""
-                  />
-                  <img
-                    className="min-w-[1.2rem]"
-                    src="/images/sample-star.svg"
-                    alt=""
-                  />
+                <div>
+                  <h2 className="lg:text-5xl lg:mb-4 text-3xl font-semibold mb-2">
+                    Szpinak dobry
+                  </h2>
+                  <div className="flex  gap-[2px] lg:mb-6 mb-2">
+                    {displayRating(5, "lg:min-w-[1.5rem]")}
+                  </div>
                 </div>
-              </div>
-              <p className="mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque at imperdiet ipsum. Integer ac rutrum ante, ac
-                feugiat leo. Vestibulum eget malesuada metus. Vestibulum felis
-                justo, iaculis ac risus vitae
-              </p>
-              <div className="flex gap-5">
-                <button className="p-2 pl-4 pr-4 rounded bg-szpgreen text-white flex items-center gap-2">
-                  <i className="fa-solid fa-bookmark"></i>
-                  <p>save recipe</p>
-                </button>
-                <button className="text-[#404040] flex gap-2 items-center">
-                  <i className="fa-solid fa-share"></i>
-                  <p>share</p>
-                </button>
-                <button className="text-[#404040] flex gap-2 items-center">
-                  <i className=" fa-solid fa-print"></i>
-                  <p>print</p>
-                </button>
+                <p className="mb-4 lg:text-lg lg:max-w-[30rem] lg:mb-8">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Pellentesque at imperdiet ipsum. Integer ac rutrum ante, ac
+                  feugiat leo. Vestibulum eget malesuada metus. Vestibulum felis
+                  justo, iaculis ac risus vitae
+                </p>
+                <div className="flex gap-5 ">
+                  <button className="p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2">
+                    <i className="fa-solid fa-bookmark"></i>
+                    <p>save recipe</p>
+                  </button>
+                  <button className="text-[#404040] hover:text-black flex gap-2 items-center">
+                    <i className="fa-solid fa-share"></i>
+                    <p>share</p>
+                  </button>
+                  <button className="text-[#404040] hover:text-black flex gap-2 items-center">
+                    <i className=" fa-solid fa-print"></i>
+                    <p>print</p>
+                  </button>
+                </div>
               </div>
             </div>
           </section>
-          <section id="recipe__ingredients" className="mb-8">
+          <section id="recipe__ingredients" className="mb-8 lg:mb-12">
             <div className="bg-[#3F3D56] text-white p-4">
-              <h2 className="font-semibold text-lg">Ingredients</h2>
-              <ul className="list-disc pl-4">
+              <h2 className="font-semibold text-lg lg:text-3xl mb-2 lg:mb-4">
+                Ingredients
+              </h2>
+              <ul className="list-disc pl-4 lg:text-lg">
                 <li>8 oz (225g) pasta (such as penne or fusilli)</li>
                 <li>2 tablespoons olive oil</li>
                 <li>3 cloves garlic, minced</li>
@@ -97,8 +80,10 @@ export default function Recipe() {
             </div>
           </section>
           <section id="recipe__instructions" className="mb-12">
-            <h2 className=" font-bold text-lg">Instructions</h2>
-            <ol className=" list-decimal pl-4">
+            <h2 className=" font-bold lg:text-3xl text-lg mb-2 lg:mb-4">
+              Instructions
+            </h2>
+            <ol className=" list-decimal pl-4 lg:max-w-[600px] lg:text-lg">
               <li className="font-semibold">Cook the Pasta</li>
               <p>
                 Bring a large pot of salted water to a boil. Add the pasta and
@@ -139,8 +124,8 @@ export default function Recipe() {
             </ol>
           </section>
           <section id="trending" className="mb-12">
-            <h2 className="text-2xl mb-2">Trending recipes:</h2>
-            <Carousel />
+            {/* <h2 className="text-2xl mb-2">Trending recipes:</h2>
+            <Carousel /> */}
           </section>
         </div>
       </div>

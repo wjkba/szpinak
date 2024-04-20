@@ -17,12 +17,12 @@ function Navbar() {
         <div className="w-full lg:px-[120px] flex  justify-between  items-center max-w-[1300px]">
           <Link to={"/"} className="flex gap-2 items-center">
             <img src="/images/icon-spinach.png" alt="" />
-            <p className="text-lg font-semibold">szpinak</p>
+            <p className="lg:text-2xl text-lg font-semibold">szpinak</p>
           </Link>
           <div onClick={handleToggleMenu} className="lg:hidden cursor-pointer">
             <i className="fa-solid fa-bars fa-lg"></i>
           </div>
-          <div className="hidden text-xl lg:flex gap-4">
+          <div className="hidden text-xl lg:flex gap-8">
             <Link to="/recipes" className="hover:font-medium cursor-pointer">
               recipes
             </Link>

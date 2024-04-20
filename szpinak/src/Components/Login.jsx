@@ -25,7 +25,7 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="lg:text-lg">
       <div className="flex w-full justify-between items-center p-4 pl-0 bg-szpgray">
         <button
           className="bg-szpgray min-w-[5rem] rounded cursor-pointer"
@@ -34,25 +34,26 @@ export default function Login() {
           <i className="fa-solid fa-arrow-left"></i>
         </button>
       </div>
-      <div className="grid place-items-center bg-szpgray ">
-        <div className="h-screen rounded gird place-content-center  w-full bg-white p-4">
+
+      <div className="grid place-items-center bg-szpgray mt-[6rem]">
+        <div className=" rounded gird place-content-center  w-full bg-white p-4">
           <div className="grid place-items-center">
             <div className="mb-8">
               <img src="/images/szpinak-logo-login.png" alt="" />
             </div>
             <form
               onSubmit={handleSubmit}
-              className="grid gap-2 place-items-center"
+              className="grid gap-2 place-items-center lg:min-w-[20rem]"
             >
-              <div className="grid gap-2 mb-4">
+              <div className="grid gap-2 mb-4 w-full">
                 <Message msg={message} color={color} />
                 <input
-                  className="bg-red p-1 rounded border-2 border-[#214e9c]/14"
+                  className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
                   placeholder="Username"
                   onChange={handleUsernameChange}
                 />
                 <input
-                  className="bg-red p-1 rounded border-2 border-[#214e9c]/14"
+                  className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
                   type="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
@@ -70,7 +71,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 
   function placeholderHandleLogin() {

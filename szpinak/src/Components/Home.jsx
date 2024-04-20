@@ -9,29 +9,29 @@ export default function Home() {
     return new Date(b.date) - new Date(a.date);
   });
   const popular_recipes = [...data].sort((a, b) => b.views - a.views);
-  const random_recipes = chooseRandomElements(data, 4);
-  console.log("🚀 ~ Home ~ random_recipes:", random_recipes);
+  const random_recipes = chooseRandomElements(data, 5);
+  // Dodaj state management do recipes variables i rozsylaj je po aplikacji
 
   return (
     <>
       <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
-          <section id="introduction" className="mt-8 mb-8">
+          <section id="introduction" className="mt-8 lg:my-[80px] mb-8">
             <div className="lg:flex flex-row-reverse items-center justify-between ">
               <div className="grid place-items-center mb-4">
                 <img
-                  className="lg:min-w-[20rem]"
+                  className="lg:min-w-[25rem]"
                   src="/images/illustration.svg"
                   alt=""
                 />
               </div>
-              <div className="max-w-[25rem]">
-                <h1 className="xs:text-4xl text-5xl font-bold mb-4">
+              <div className="lg:max-w-[28rem] max-w-[24rem]">
+                <h1 className="lg:text-6xl xs:text-4xl text-5xl font-semibold mb-4 ">
                   Szpinak dobry bardzo,{" "}
                   <span className="text-szpgreen">mniam</span>
                 </h1>
-                <p className="xs:text-base text-lg leading-tight">
+                <p className="xs:text-base lg:text-lg leading-tight ">
                   Szpinak ipsum dolor sit amet, consectetur adipiscing elit.
                   Cursus imperdiet sed id elementum.
                 </p>
@@ -39,7 +39,7 @@ export default function Home() {
             </div>
           </section>
           <section id="newest" className="mb-12">
-            <h2 className="text-2xl font mb-2">Our newest recipes:</h2>
+            <h2 className="text-2xl font mb-2">Newest recipes:</h2>
             <Carousel recipes={newest_recipes} />
           </section>
           <section id="popular" className="mb-12">
