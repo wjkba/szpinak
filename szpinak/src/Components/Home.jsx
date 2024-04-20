@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Navbar />
       <div className="grid place-items-center">
-        <div className="max-w-[450px] lg:max-w-[1300px] lg:pl-[120px] lg:pr-[120px]">
+        <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
           <section id="introduction" className="mt-8 mb-8">
             <div className="lg:flex flex-row-reverse items-center justify-between ">
               <div className="grid place-items-center mb-4">

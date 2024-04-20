@@ -13,8 +13,8 @@ function Navbar() {
       {isMenu && (
         <MenuModal handleToggleMenu={handleToggleMenu} isMenu={isMenu} />
       )}
-      <div className="grid place-items-center p-4 bg-szpgray">
-        <div className="flex w-full justify-between items-center max-w-[720px]">
+      <div className="lg:py-4 lg:px-0 grid place-items-center p-4 bg-szpgray">
+        <div className="w-full lg:px-[120px] flex  justify-between  items-center max-w-[1300px]">
           <Link to={"/"} className="flex gap-2 items-center">
             <img src="/images/icon-spinach.png" alt="" />
             <p className="text-lg font-semibold">szpinak</p>
