@@ -1,6 +1,11 @@
 import "./App.css";
 import { useState } from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  ScrollRestoration,
+} from "react-router-dom";
 
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login.jsx";
@@ -20,7 +25,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/recipe",
+    path: "/recipe/:recipeId",
     element: <Recipe />,
   },
   {

@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 //   - skopiuj login na register
 export default function Login() {
@@ -31,7 +32,7 @@ export default function Login() {
           className="bg-szpgray min-w-[5rem] rounded cursor-pointer"
           onClick={() => navigate(-1)}
         >
-          <i className="fa-solid fa-arrow-left"></i>
+          <FaArrowLeftLong className="ml-8" />
         </button>
       </div>
 

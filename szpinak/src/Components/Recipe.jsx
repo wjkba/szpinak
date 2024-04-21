@@ -1,58 +1,66 @@
 import Navbar from "./Navbar";
 import Carousel from "./Carousel";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams, ScrollRestoration } from "react-router-dom";
 import { displayRating } from "./RecipeCard";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa";
+import { FaShare } from "react-icons/fa";
+import { FaPrint } from "react-icons/fa";
+import data from "../data.json";
 
 export default function Recipe() {
   const navigate = useNavigate();
+  const params = useParams();
+  const recipeId = Number(params.recipeId);
+  const recipe = data.find((element) => element.id === recipeId);
+
   return (
     <>
       <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] lg:px-[120px] w-full p-2">
-          <section id="recipe__info" className="mb-8">
+          <section id="recipe__info" className="lg:mt-[20px] mt-8 mb-8">
             <div className="p-4 pl-0">
               <button
-                className="bg-szpgray min-w-[5rem] p-1 rounded cursor-pointer"
+                className="bg-szpgray min-w-[5rem] grid place-items-center p-2 rounded cursor-pointer"
                 onClick={() => navigate(-1)}
               >
-                <i className="fa-solid fa-arrow-left"></i>
+                <FaArrowLeftLong size={20} />
               </button>
             </div>
-            <div className="lg:flex lg:gap-10">
-              <div className=" grid place-items-center mb-4 lg:min-w-[480px]">
-                <img
-                  className="rounded-lg  w-full"
-                  src="/images/sample-szpinak.png"
-                  alt=""
-                />
+            <div className="lg:grid grid-cols-2 lg:gap-10">
+              <div className=" grid place-items-center mb-4 ">
+                <img className="rounded-lg  w-full" src={recipe.image} alt="" />
               </div>
-              <div>
+              <div className="">
                 <div>
-                  <h2 className="lg:text-5xl lg:mb-4 text-3xl font-semibold mb-2">
-                    Szpinak dobry
-                  </h2>
-                  <div className="flex  gap-[2px] lg:mb-6 mb-2">
-                    {displayRating(5, "lg:min-w-[1.5rem]")}
+                  <div>
+                    <h2 className="lg:text-5xl lg:mb-4 text-3xl font-semibold mb-2">
+                      {recipe.title}
+                    </h2>
+                    <div className="flex  gap-[2px] lg:mb-4 mb-2">
+                      {displayRating(recipe.rating, "text-szpgreen lg:text-xl")}
+                    </div>
                   </div>
+                  <p className="mb-4 lg:text-lg lg:max-w-[30rem] lg:mb-6">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Pellentesque at imperdiet ipsum. Integer ac rutrum ante, ac
+                    feugiat leo. Vestibulum eget malesuada metus. Vestibulum
+                    felis justo, iaculis ac risus vitae
+                  </p>
                 </div>
-                <p className="mb-4 lg:text-lg lg:max-w-[30rem] lg:mb-8">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Pellentesque at imperdiet ipsum. Integer ac rutrum ante, ac
-                  feugiat leo. Vestibulum eget malesuada metus. Vestibulum felis
-                  justo, iaculis ac risus vitae
-                </p>
                 <div className="flex gap-5 ">
                   <button className="p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2">
-                    <i className="fa-solid fa-bookmark"></i>
+                    <FaBookmark />
                     <p>save recipe</p>
                   </button>
                   <button className="text-[#404040] hover:text-black flex gap-2 items-center">
-                    <i className="fa-solid fa-share"></i>
+                    <FaShare />
                     <p>share</p>
                   </button>
                   <button className="text-[#404040] hover:text-black flex gap-2 items-center">
-                    <i className=" fa-solid fa-print"></i>
+                    <FaPrint />
                     <p>print</p>
                   </button>
                 </div>
@@ -129,6 +137,7 @@ export default function Recipe() {
           </section>
         </div>
       </div>
+      <ScrollRestoration />
     </>
   );
 }

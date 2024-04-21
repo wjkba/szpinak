@@ -37,6 +37,7 @@ export default function Carousel({ recipes = [] }) {
         {recipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
+            id={recipe.id}
             title={recipe.title}
             image={recipe.image}
             rating={recipe.rating}
