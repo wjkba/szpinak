@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 
 
 class Recipe(BaseModel):
-      id: str
+      id: int
       title: str = Field(min_length=1, max_length=20)
       image: str = Field(min_length=1)
       description: str = Field(min_length=1)
@@ -14,3 +14,12 @@ class Recipe(BaseModel):
       ingredients: str
       instructions: str
       date: str
+
+class TestModel(BaseModel):
+      title: str = Field(min_length=1, max_length=20)
+      image: str = Field(min_length=1)
+      description: str = Field(min_length=1)
+      time: str
+      ingredients: str
+      instructions: str
+      
