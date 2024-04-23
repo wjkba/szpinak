@@ -1,16 +1,30 @@
 import Carousel from "./Carousel";
 import MenuModal from "./MenuModal";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "../data.json";
+import axios from "axios";
+import { useFetcher } from "react-router-dom";
 
 export default function Home() {
+  // todo: Dodaj state management do recipes variables i rozsylaj je po aplikacji
+  // RECIPES
   let newest_recipes = [...data].sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
   const popular_recipes = [...data].sort((a, b) => b.views - a.views);
   const random_recipes = chooseRandomElements(data, 5);
-  // Dodaj state management do recipes variables i rozsylaj je po aplikacji
+
+  // fetch recipes from szpinak_db
+  const fetchRecipes = async () => {
+    const response = await fetch("http://localhost:8000/api/recipes");
+    const todos = await response.json();
+    console.log(todos);
+  };
+
+  useEffect(() => {
+    fetchRecipes();
+  });
 
   return (
     <>

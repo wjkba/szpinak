@@ -1,4 +1,6 @@
 from model import Recipe, TestModel
+from datetime import datetime
+
 
 # MongoDB driver
 import motor.motor_asyncio
@@ -25,9 +27,15 @@ async def create_recipe(recipe):
   result = await collection.insert_one(document)
   return document
 
+# rozwiazanie id tymczasowe, 
+# razem z object id tworze zwykle cyfrowe id
 async def test_create_recipe(test_recipe):
-  document = Recipe(id=9, title=test_recipe['title'], image=test_recipe['image'], description=test_recipe['description'], views=1, rating=1, time=test_recipe['time'], ingredients=test_recipe['ingredients'], instructions=test_recipe['instructions'], date="d").dict()
-  result = await collection.insert_one(document)
+  date_string = (datetime.now()).strftime("%Y-%m-%d")
+  # sprawdz ile jest dokumentow w kolekcji
+  n = await collection.count_documents({})
+  # id to liczba dokumentow w kolekcji + 1
+  document = Recipe(id=n+1, title=test_recipe['title'], image=test_recipe['image'], description=test_recipe['description'], views=1, rating=5, time=test_recipe['time'], ingredients=test_recipe['ingredients'], instructions=test_recipe['instructions'], date=date_string)
+  result = await collection.insert_one(document.dict())
   return document
 
 async def update_recipe(id, title, description, image, time, ingredients, instructions):

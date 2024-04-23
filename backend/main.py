@@ -17,21 +17,19 @@ from database import (
 app = FastAPI()
 
 # pozwalamy na headers, methods zeby sie komunikowalo git
-origins = ['https://localhost:3000']
+origins = ['*']
 
 app.add_middleware(
   CORSMiddleware,
   allow_origins=origins,
-  allow_credentials= True,
-  allow_methods= ["*"],
-  allow_headers = ["*"],
+  allow_credentials=True,
+  allow_methods=["*"],
+  allow_headers=["*"],
 )
 
-@app.get("/")
-async def read_root():
-  return {"message": "hello"}
 
-@app.get("/recipes")
+
+@app.get("/api/recipes")
 async def get_recipes():
   response = await fetch_all_recipes()
   return response
@@ -54,24 +52,19 @@ async def get_user_recipes(user):
   return 1
 
 # POST
-@app.post("/api/recipe", response_model=Recipe)
-async def post_recipe(recipe: Recipe):
-  response = await create_recipe(recipe.dict())
-  if response:
-    return response
-  raise HTTPException(400, detail="Something went wrong")
+# @app.post("/api/recipe",tags=["create"] ,response_model=Recipe)
+# async def post_recipe(recipe: Recipe):
+#   response = await create_recipe(recipe.dict())
+#   if response:
+#     return response
+#   raise HTTPException(400, detail="Something went wrong")
 
-@app.post("/api/test")
-async def TEST(test_recipe: TestModel):
+@app.post("/api/recipe", tags=["create"])
+async def post_recipe(test_recipe: TestModel):
   response = await test_create_recipe(test_recipe.dict())
   if response:
     return response
   raise HTTPException(400, detail="Something went wrong")  
-
-  # response = await create_recipe(recipe.dict())
-  # if response:
-  #   return response
-  # raise HTTPException(400, detail="Something went wrong")
 
 
 # UPDATE
@@ -81,7 +74,7 @@ async def update_recipe(id):
 
 
 # DELETE
-@app.delete("/api/recipe/{id}")
+@app.delete("/api/recipe/{id}", tags=["delete"])
 async def delete_recipe(id: int):
   response = await remove_recipe(id) 
   if response:
