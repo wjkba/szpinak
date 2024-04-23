@@ -13,6 +13,7 @@ import Recipe from "./Components/Recipe.jsx";
 import NotFound from "./Components/404.jsx";
 import RecipesPage from "./Components/RecipesPage.jsx";
 import AboutPage from "./Components/AboutPage.jsx";
+import AddRecipeForm from "./Components/AddRecipeForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <AboutPage />,
+  },
+  {
+    path: "/addrecipe",
+    element: <AddRecipeForm />,
   },
 ]);
 
