@@ -6,24 +6,14 @@
 import { useState } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
+import LoginForm from "./LoginForm";
 
 //   - skopiuj login na register
 export default function Login() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
   const [message, setMessage] = useState("default");
   const [color, setColor] = useState("bg-yellow-200");
   const navigate = useNavigate();
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <div className="lg:text-lg">
@@ -42,33 +32,7 @@ export default function Login() {
             <div className="mb-8">
               <img src="/images/szpinak-logo-login.png" alt="" />
             </div>
-            <form
-              onSubmit={handleSubmit}
-              className="grid gap-2 place-items-center lg:min-w-[20rem]"
-            >
-              <div className="grid gap-2 mb-4 w-full">
-                <Message msg={message} color={color} />
-                <input
-                  className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
-                  placeholder="Username"
-                  onChange={handleUsernameChange}
-                />
-                <input
-                  className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
-                  type="password"
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                />
-              </div>
-
-              <button
-                type="submit"
-                onClick={placeholderHandleLogin}
-                className="rounded p-2 bg-[#3F3D56] text-white w-full"
-              >
-                Login
-              </button>
-            </form>
+            <LoginForm />
           </div>
         </div>
       </div>
