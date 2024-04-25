@@ -1,16 +1,17 @@
-from fastapi import FastAPI, HTTPException
 
 # CROSS ORIGIN RESOURCE SHARING
 # uzywamy kidybackend jest w innym origin niz frontend
 from fastapi.middleware.cors import CORSMiddleware
-from model import Recipe, TestModel
+from fastapi import FastAPI, HTTPException
+from models import Recipe, NewRecipe, User, NewUser
+from passlib.context import CryptContext
 from database import (
   fetch_one_recipe,
   fetch_all_recipes,
-  create_recipe,
   update_recipe,
   remove_recipe,
-  test_create_recipe
+  create_new_recipe,
+  create_user
 )
 
 # APP OBJECT
@@ -28,12 +29,16 @@ app.add_middleware(
 )
 
 
+# PASSLIB
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
+# RECIPES
+# TODO: dodaj get by id, newest, trending, get by user
 @app.get("/api/recipes")
 async def get_recipes():
   response = await fetch_all_recipes()
   return response
-
 
 @app.get("/api/recipe/{id}")
 async def get_recipe_by_id(id):
@@ -51,35 +56,46 @@ async def get_trending():
 async def get_user_recipes(user):
   return 1
 
-# POST
-# @app.post("/api/recipe",tags=["create"] ,response_model=Recipe)
-# async def post_recipe(recipe: Recipe):
-#   response = await create_recipe(recipe.dict())
-#   if response:
-#     return response
-#   raise HTTPException(400, detail="Something went wrong")
 
+# CREATE RECIPE
 @app.post("/api/recipe", tags=["create"])
-async def post_recipe(test_recipe: TestModel):
-  response = await test_create_recipe(test_recipe.dict())
+async def post_recipe(new_recipe: NewRecipe):
+  response = await create_new_recipe(new_recipe.model_dump())
   if response:
     return response
   raise HTTPException(400, detail="Something went wrong")  
 
 
-# UPDATE
+# UPDATE RECIPE
 @app.put("/api/recipe/{id}")
 async def update_recipe(id):
   return 1
 
 
-# DELETE
+# DELETE RECIPE
 @app.delete("/api/recipe/{id}", tags=["delete"])
 async def delete_recipe(id: int):
   response = await remove_recipe(id) 
   if response:
     return {"message": f"{id} has been deleted"}
   return HTTPException(status_code=400, detail="Something went wrong")
+
+
+# USERS
+@app.post("/api/sign_up", tags=["users"])
+async def sign_up(new_user: NewUser):
+  user = User(username=new_user.username, password=get_password_hash(new_user.password))
+  response = await create_user(user.model_dump())
+  if response:
+    return {"message": f"User {new_user.username} has been created"}
+  return HTTPException(status_code=400, detail="Something went wrong")
+
+
+def get_password_hash(password): # HASHOWANIE HASŁA
+  return pwd_context.hash(password)
+
+# TODO: dodaj token
+
 
 
 

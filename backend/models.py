@@ -1,8 +1,6 @@
 # do tworzenie json schemas
 from pydantic import BaseModel, Field
 
-
-
 class Recipe(BaseModel):
       id: int
       title: str = Field(min_length=1, max_length=20)
@@ -15,7 +13,7 @@ class Recipe(BaseModel):
       instructions: str
       date: str
 
-class TestModel(BaseModel):
+class NewRecipe(BaseModel):
       title: str = Field(min_length=1, max_length=20)
       image: str = Field(min_length=1)
       description: str = Field(min_length=1)
@@ -23,3 +21,10 @@ class TestModel(BaseModel):
       ingredients: str
       instructions: str
       
+class User(BaseModel):
+      username: str
+      password: str
+
+class NewUser(BaseModel):
+      username: str
+      password: str
