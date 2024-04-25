@@ -1,29 +1,35 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 export default function AddRecipeForm() {
-  const [title, setTitle] = useState("title");
-  const [image, setImage] = useState("image url");
-  const [desc, setDesc] = useState("description");
-  const [time, setTime] = useState("time");
-  const [ingredients, setIngredients] = useState("ingredients");
-  const [instructions, setInstructions] = useState("instructions");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  // todo: add react hook form
-  const handleAddRecipe = () => {
+  const onSubmit = async (data) => {
     axios
       .post("http://localhost:8000/api/recipe", {
-        title: title,
-        image: image,
-        description: desc,
-        time: time,
-        ingredients: ingredients,
-        instructions: instructions,
+        title: data.title,
+        image: data.image,
+        description: data.description,
+        time: data.time,
+        ingredients: data.ingredients,
+        instructions: data.instructions,
       })
       .then((res) => console.log(res))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setError("root", { message: error.message });
+      });
+    console.log(data);
   };
+
+  // todo: add react hook form
 
   return (
     <>
@@ -31,63 +37,120 @@ export default function AddRecipeForm() {
       <div className="grid place-items-center ">
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
           <h1 className="lg:text-5xl text-4xl mb-4">add recipe</h1>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col max-w-[20rem]">
-              <input
-                onChange={(e) => setTitle(e.target.value)}
-                type="text"
-                placeholder="title"
-                className="border mb-2"
-              />
-              <input
-                onChange={(e) => setImage(e.target.value)}
-                type="text"
-                placeholder="image"
-                className="border mb-2"
-              />
-              <input
-                onChange={(e) => setDesc(e.target.value)}
-                type="text"
-                placeholder="description"
-                className="border mb-2"
-              />
+              <div className="mb-2">
+                <label>
+                  Title
+                  <input
+                    {...register("title", {
+                      required: "Title is required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.title && (
+                  <p className="text-sm text-red-400">{errors.title.message}</p>
+                )}
+              </div>
 
-              <input
-                onChange={(e) => setTime(e.target.value)}
-                type="text"
-                placeholder="time"
-                className="border mb-2"
-              />
-              <input
-                onChange={(e) => setIngredients(e.target.value)}
-                type="text"
-                placeholder="ingredients"
-                className="border mb-2"
-              />
-              <input
-                onChange={(e) => setInstructions(e.target.value)}
-                type="text"
-                placeholder="instructions"
-                className="border mb-2"
-              />
+              <div className="mb-2">
+                <label>
+                  Image
+                  <input
+                    {...register("image", {
+                      required: "Image link is required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.image && (
+                  <p className="text-sm text-red-400">{errors.image.message}</p>
+                )}
+              </div>
+              <div className="mb-2">
+                <label>
+                  Description
+                  <input
+                    {...register("description", {
+                      required: "Description is required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.description && (
+                  <p className="text-sm text-red-400">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mb-2">
+                <label>
+                  Time
+                  <input
+                    {...register("time", {
+                      required: "Time is required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.time && (
+                  <p className="text-sm text-red-400">{errors.time.message}</p>
+                )}
+              </div>
+              <div className="mb-2">
+                <label>
+                  Ingredients
+                  <input
+                    {...register("ingredients", {
+                      required: "Ingredients are required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.ingredients && (
+                  <p className="text-sm text-red-400">
+                    {errors.ingredients.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-2">
+                <label>
+                  Instructions
+                  <input
+                    {...register("instructions", {
+                      required: "Instructions are required",
+                    })}
+                    type="text"
+                    className="border w-full"
+                  />
+                </label>
+                {errors.instructions && (
+                  <p className="text-sm text-red-400">
+                    {errors.instructions.message}
+                  </p>
+                )}
+              </div>
             </div>
             <button
-              onClick={handleAddRecipe}
-              className="border px-8 bg-szpgreen"
+              disabled={isSubmitting}
+              type="submit"
+              className="border px-8 bg-pink-400"
             >
-              submit
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
+            {errors.root && (
+              <p className="text-sm text-red-400">{errors.root.message}</p>
+            )}
           </form>
         </div>
       </div>
-      <code>
-        <p>{title}</p>
-        <p>{image}</p>
-        <p>{desc}</p>
-        <p>{time}</p>
-        <p>{ingredients}</p>
-        <p>{instructions}</p>
-      </code>
     </>
   );
 }
