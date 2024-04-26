@@ -1,6 +1,8 @@
+from datetime import timedelta, datetime
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
+from jose import jwt
 import motor.motor_asyncio
 from database import (
   database,
@@ -10,9 +12,25 @@ from database import (
 app = FastAPI()
 
 
-
 # PASSLIB
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+SECRET_KEY = "7d6477978d331618e4316253809d5b1663a10295fc113b6725debe07cf31b712"
+ALGORITHM = "HS256"
+
+def create_access_token(data: dict, expires_delta: timedelta):
+  to_encode = data.copy()
+  expire = datetime.utcnow() + expires_delta # termin waznosci 30 minut od teraz
+  to_encode.update({"exp":expire})
+  # to_enocde zawiera sub: username i czas expire
+  # to_encode kodujemy za pomoca jwt.encode i wykorzystujemy secret key z algorytmem
+  encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+  return encoded_jwt
+
+def get_password_hash(password): # HASHOWANIE HASŁA
+  return pwd_context.hash(password)
+
+
 
 # TODO: dodaj token
 # Token autoryzuje uzytkownika bez koniecznosci 
@@ -31,11 +49,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
   password = form_data.password
   authenticated = await authenticate_user(username, password)
   if authenticated:
-    return {"access_token": username, "token_type": "bearer"}
+    access_token = create_access_token(data={"sub":username}, expires_delta=timedelta(minutes=30))
+    return {"access_token": access_token, "token_type": "bearer"}
   else:
     raise HTTPException(status_code=400, detail="Incorrect username or password")
-
-
 
 async def authenticate_user(username, password):
   user = await users_collection.find_one({"username": username})
@@ -44,5 +61,3 @@ async def authenticate_user(username, password):
     return password_check
   return False
 
-def get_password_hash(password): # HASHOWANIE HASŁA
-  return pwd_context.hash(password)

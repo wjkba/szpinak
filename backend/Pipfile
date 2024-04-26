@@ -9,6 +9,7 @@ uvicorn = "==0.29.0"
 motor = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
 
 [dev-packages]
 
