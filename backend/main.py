@@ -2,16 +2,21 @@
 # CROSS ORIGIN RESOURCE SHARING
 # uzywamy kidybackend jest w innym origin niz frontend
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.security import OAuth2PasswordRequestForm
+
 from models import Recipe, NewRecipe, User, NewUser
-from passlib.context import CryptContext
+
 from database import (
   fetch_one_recipe,
   fetch_all_recipes,
   update_recipe,
   remove_recipe,
   create_new_recipe,
-  create_user
+  create_user,
+)
+from auth import (
+  get_password_hash
 )
 
 # APP OBJECT
@@ -29,8 +34,7 @@ app.add_middleware(
 )
 
 
-# PASSLIB
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 # RECIPES
@@ -91,10 +95,15 @@ async def sign_up(new_user: NewUser):
   return HTTPException(status_code=400, detail="Something went wrong")
 
 
-def get_password_hash(password): # HASHOWANIE HASŁA
-  return pwd_context.hash(password)
 
-# TODO: dodaj token
+
+
+
+
+
+  
+
+
 
 
 

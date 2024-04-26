@@ -1,7 +1,6 @@
 from models import Recipe, NewRecipe
 from datetime import datetime
 
-
 # MongoDB driver
 import motor.motor_asyncio
 
@@ -11,6 +10,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client["szpinak_db"]
 recipes_collection = database["recipes"]
 users_collection = database["users"]
+
 
 
 async def fetch_one_recipe(title):
@@ -52,4 +52,5 @@ async def create_user(User):
   document = User
   await users_collection.insert_one(document)
   return document
-  
+
+
