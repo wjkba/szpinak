@@ -44,19 +44,17 @@ async def fetch_most_viewed_recipes(n):
   return most_viewed[:n]
   
 
-
-# TODO: id ma byc tworzone na podstawie najwyzszego id a nie dlugosci kolekcji
-# rozwiazanie id tymczasowe, 
-# razem z object id tworze zwykle cyfrowe id
+# obok object id tworze proste liczbowe id
 
 async def create_new_recipe(new_recipe):
+  ids = []
+  cursor = recipes_collection.find({})
+  async for document in cursor:
+    ids.append(document["id"])
   date_string = (datetime.now()).strftime("%Y-%m-%d")
-  # sprawdz ile jest dokumentow w kolekcji
-  n = await recipes_collection.count_documents({})
-  # id to liczba dokumentow w kolekcji + 1
-  document = Recipe(id=n+1, title=new_recipe['title'], image=new_recipe['image'], description=new_recipe['description'], views=1, rating=5, time=new_recipe['time'], ingredients=new_recipe['ingredients'], instructions=new_recipe['instructions'], date=date_string)
+  document = Recipe(id=max(ids)+1, title=new_recipe['title'], image=new_recipe['image'], description=new_recipe['description'], views=1, rating=5, time=new_recipe['time'], ingredients=new_recipe['ingredients'], instructions=new_recipe['instructions'], date=date_string)
   result = await recipes_collection.insert_one(document.model_dump())
-  return document
+  return result
 
 async def update_recipe(id, title, description, image, time, ingredients, instructions):
   await recipes_collection.update_one({"id":id},{"$set":{
@@ -70,8 +68,12 @@ async def remove_recipe(id):
   return True
 
 async def create_user(User):
+  username = User["username"]
+  username_exists = await users_collection.find_one({"username":username})
+  if username_exists:
+    return {"message":"This username already exists"}
   document = User
   await users_collection.insert_one(document)
-  return document
+  return {"message": f"user: {username} has been created."}
 
 

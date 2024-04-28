@@ -18,11 +18,14 @@ from database import (
   create_user,
 )
 from auth import (
-  get_password_hash
+  get_password_hash,
+  get_current_user
 )
+import auth
 
 # APP OBJECT
 app = FastAPI()
+app.include_router(auth.router)
 
 # pozwalamy na headers, methods zeby sie komunikowalo git
 origins = ['*']
@@ -35,9 +38,12 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-
-
-
+# AUTH CHECK
+@app.get("/authcheck", tags=["auth"])
+async def check_auth(current_user = Depends(get_current_user)):
+  if current_user is None:
+    return{"message": "please log in"}
+  return {"message":"Authorized"}
 
 # RECIPES
 @app.get("/api/recipes")
@@ -94,7 +100,7 @@ async def sign_up(new_user: NewUser):
   user = User(username=new_user.username, password=get_password_hash(new_user.password))
   response = await create_user(user.model_dump())
   if response:
-    return {"message": f"User {new_user.username} has been created"}
+    return response
   return HTTPException(status_code=400, detail="Something went wrong")
 
 

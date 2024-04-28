@@ -1,15 +1,15 @@
 from datetime import timedelta, datetime
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
-from jose import jwt
+from jose import jwt, JWTError
 import motor.motor_asyncio
 from database import (
   database,
   users_collection
 )
 
-app = FastAPI()
+router = APIRouter()
 
 
 # PASSLIB
@@ -34,7 +34,7 @@ def get_password_hash(password): # HASHOWANIE HASŁA
 # logowania tak dlugo jak token jest wazny
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-@app.get("/v")
+@router.get("/v")
 # pytamy czy klient ma token, jesli ma to dajemy dostęp do endpointa
 # jeśli klient nie ma tokena to idź do tokenUrl
 async def validate_token(token: str = Depends(oauth2_scheme)): 
@@ -47,7 +47,7 @@ async def authenticate_user(username, password):
     return password_check
   return False
 
-@app.post("/token")
+@router.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
   username = form_data.username
   password = form_data.password
@@ -57,6 +57,13 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     return {"access_token": access_token, "token_type": "bearer"}
   else:
     raise HTTPException(status_code=400, detail="Incorrect username or password")
-
-
-
+  
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+  try:
+    payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
+    username: str = payload.get("sub")
+    if username is None:
+      raise HTTPException()
+    return {"username": username}
+  except JWTError:
+    raise HTTPException(status_code=400, detail="error")
