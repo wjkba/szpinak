@@ -30,9 +30,6 @@ def create_access_token(data: dict, expires_delta: timedelta):
 def get_password_hash(password): # HASHOWANIE HASŁA
   return pwd_context.hash(password)
 
-
-
-# TODO: dodaj token
 # Token autoryzuje uzytkownika bez koniecznosci 
 # logowania tak dlugo jak token jest wazny
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -42,6 +39,13 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # jeśli klient nie ma tokena to idź do tokenUrl
 async def validate_token(token: str = Depends(oauth2_scheme)): 
   return {"token": token}
+
+async def authenticate_user(username, password):
+  user = await users_collection.find_one({"username": username})
+  if user:
+    password_check = pwd_context.verify(password, user["password"])
+    return password_check
+  return False
 
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -54,10 +58,5 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
   else:
     raise HTTPException(status_code=400, detail="Incorrect username or password")
 
-async def authenticate_user(username, password):
-  user = await users_collection.find_one({"username": username})
-  if user:
-    password_check = pwd_context.verify(password, user["password"])
-    return password_check
-  return False
+
 

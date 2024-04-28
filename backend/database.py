@@ -25,9 +25,30 @@ async def fetch_all_recipes():
   return recipes
 
 
+async def fetch_newest_recipes(n):
+  recipes = []
+  cursor = recipes_collection.find({})
+  async for document in cursor:
+    del document["_id"]
+    recipes.append(document)
+  newest_to_oldest = sorted(recipes, key=lambda recipe: recipe["date"], reverse=True)
+  return newest_to_oldest[:n]
+
+async def fetch_most_viewed_recipes(n):
+  recipes = []
+  cursor = recipes_collection.find({})
+  async for document in cursor:
+    del document["_id"]
+    recipes.append(document)
+  most_viewed = sorted(recipes, key=lambda recipe: recipe["views"], reverse = True)
+  return most_viewed[:n]
+  
+
+
+# TODO: id ma byc tworzone na podstawie najwyzszego id a nie dlugosci kolekcji
 # rozwiazanie id tymczasowe, 
 # razem z object id tworze zwykle cyfrowe id
-# TODO: id ma byc tworzone na podstawie najwyzszego id a nie dlugosci kolekcji
+
 async def create_new_recipe(new_recipe):
   date_string = (datetime.now()).strftime("%Y-%m-%d")
   # sprawdz ile jest dokumentow w kolekcji

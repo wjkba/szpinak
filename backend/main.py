@@ -4,12 +4,14 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-
+from typing import Optional
 from models import Recipe, NewRecipe, User, NewUser
 
 from database import (
   fetch_one_recipe,
   fetch_all_recipes,
+  fetch_newest_recipes,
+  fetch_most_viewed_recipes,
   update_recipe,
   remove_recipe,
   create_new_recipe,
@@ -38,7 +40,6 @@ app.add_middleware(
 
 
 # RECIPES
-# TODO: dodaj get by id, newest, trending, get by user
 @app.get("/api/recipes")
 async def get_recipes():
   response = await fetch_all_recipes()
@@ -49,12 +50,14 @@ async def get_recipe_by_id(id):
   return 1
 
 @app.get("/api/recipes/newest")
-async def get_newest():
-  return 1
+async def get_newest(n: int):
+  response = await fetch_newest_recipes(n)
+  return response
 
 @app.get("/api/recipes/trending")
-async def get_trending():
-  return 1
+async def get_trending(n: int):
+  response = await fetch_most_viewed_recipes(n)
+  return response
 
 @app.get("/api/recipes/{user}")
 async def get_user_recipes(user):
@@ -66,7 +69,7 @@ async def get_user_recipes(user):
 async def post_recipe(new_recipe: NewRecipe):
   response = await create_new_recipe(new_recipe.model_dump())
   if response:
-    return response
+    return {"message": f"Recipe has been created"}
   raise HTTPException(400, detail="Something went wrong")  
 
 
