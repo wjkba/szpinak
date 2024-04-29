@@ -1,5 +1,6 @@
 from models import Recipe, NewRecipe
 from datetime import datetime
+from fastapi import HTTPException
 
 # MongoDB driver
 import motor.motor_asyncio
@@ -71,7 +72,7 @@ async def create_user(User):
   username = User["username"]
   username_exists = await users_collection.find_one({"username":username})
   if username_exists:
-    return {"message":"This username already exists"}
+    raise HTTPException(status_code=409, detail="User already exists")
   document = User
   await users_collection.insert_one(document)
   return {"message": f"user: {username} has been created."}

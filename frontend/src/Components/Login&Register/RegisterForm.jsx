@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const {
     register,
     handleSubmit,
@@ -10,9 +11,13 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await axios.post(
+        "http://localhost:8000/api/sign_up",
+        data
+      );
+      console.log(response);
     } catch (error) {
-      setError("root", { message: "error" });
+      setError("root", { message: error.response.data.detail });
     }
     console.log(data);
   };
@@ -58,7 +63,7 @@ export default function LoginForm() {
         type="submit"
         className="rounded p-2 bg-[#3F3D56] text-white w-full"
       >
-        {isSubmitting ? "Loading..." : "Login"}
+        {isSubmitting ? "Loading..." : "Register"}
       </button>
       {errors.root && (
         <div className="text-sm text-red-400">{errors.root.message}</div>

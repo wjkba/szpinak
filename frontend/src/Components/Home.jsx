@@ -2,32 +2,69 @@ import Carousel from "./Carousel";
 import MenuModal from "./MenuModal";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
-import data from "../data.json";
 import axios from "axios";
-import { useFetcher } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Home() {
   // todo: Dodaj state management do recipes variables i rozsylaj je po aplikacji
   // RECIPES
-  let newest_recipes = [...data].sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
-  const popular_recipes = [...data].sort((a, b) => b.views - a.views);
-  const random_recipes = chooseRandomElements(data, 5);
+  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  const apiUrl = "http://localhost:8000/api";
 
-  // fetch recipes from szpinak_db
-  const fetchRecipes = async () => {
-    const response = await fetch("http://localhost:8000/api/recipes");
-    const todos = await response.json();
-    console.log(todos);
-  };
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchRecipes();
+  }, []);
+
+  let newest_recipes = [...recipes].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
   });
+  const popular_recipes = [...recipes].sort((a, b) => b.views - a.views);
+  const random_recipes = chooseRandomElements(recipes, 5);
+
+  // fetch recipes from szpinak_db
+  const fetchRecipes = async () => {
+    setLoading(true);
+    try {
+      const recipesResponse = await axios.get(`${apiUrl}/recipes`);
+      setRecipes(recipesResponse.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   return (
     <>
+      <div className="px-8 py-4 flex bg-pink-200 items-center justify-between">
+        <div className="flex gap-4">
+          <Link to="/login" className="px-2 bg-white">
+            Login
+          </Link>
+          <Link to="/register" className="px-2 bg-white ">
+            Register
+          </Link>
+          <Link to="/recipes" className="px-2 bg-white ">
+            RecipesPage
+          </Link>
+          <Link to="/addrecipe" className="px-2 bg-white ">
+            AddRecipeForm
+          </Link>
+          <Link to="/about" className="px-2 bg-white ">
+            AboutPage
+          </Link>
+          <Link to="/404" className="px-2 bg-white ">
+            404
+          </Link>
+        </div>
+        <div className={isLoggedIn ? "bg-green-200 p-4" : "bg-yellow-200 p-4"}>
+          <p>{isLoggedIn ? "logged in" : "not logged in"}</p>
+        </div>
+      </div>
       <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
@@ -54,7 +91,11 @@ export default function Home() {
           </section>
           <section id="newest" className="mb-12">
             <h2 className="text-2xl font mb-2">Newest recipes:</h2>
-            <Carousel recipes={newest_recipes} />
+            {loading ? (
+              <div>Loading</div>
+            ) : (
+              <Carousel recipes={newest_recipes} />
+            )}
           </section>
           <section id="popular" className="mb-12">
             <h2 className="text-2xl mb-2">Trending recipes:</h2>

@@ -8,12 +8,14 @@ import {
 } from "react-router-dom";
 
 import Home from "./Components/Home.jsx";
-import Login from "./Components/Login.jsx";
+import Login from "./Components/Login&Register/Login.jsx";
+import Register from "./Components/Login&Register/Register.jsx";
 import Recipe from "./Components/Recipe.jsx";
 import NotFound from "./Components/404.jsx";
 import RecipesPage from "./Components/RecipesPage.jsx";
 import AboutPage from "./Components/AboutPage.jsx";
 import AddRecipeForm from "./Components/AddRecipeForm.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/recipe/:recipeId",
@@ -46,7 +52,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <AuthProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
     </>
   );
 }
