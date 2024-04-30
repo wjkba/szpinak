@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import MenuModal from "./MenuModal";
+import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
   const [isMenu, setIsMenu] = useState(false);
@@ -22,7 +23,7 @@ function Navbar() {
           <div onClick={handleToggleMenu} className="lg:hidden cursor-pointer">
             <i className="fa-solid fa-bars fa-lg"></i>
           </div>
-          <div className="hidden text-xl lg:flex gap-8">
+          <div className="hidden text-xl lg:flex items-center gap-8">
             <Link to="/recipes" className="hover:font-medium cursor-pointer">
               recipes
             </Link>
@@ -31,7 +32,7 @@ function Navbar() {
               about
             </Link>
             <Link to="/login" className="hover:font-medium cursor-pointer">
-              login
+              <FaRegUser className="min-w-[2rem]" size={20} />
             </Link>
           </div>
         </div>

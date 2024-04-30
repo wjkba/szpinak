@@ -15,7 +15,7 @@ import NotFound from "./Components/404.jsx";
 import RecipesPage from "./Components/RecipesPage.jsx";
 import AboutPage from "./Components/AboutPage.jsx";
 import AddRecipeForm from "./Components/AddRecipeForm.jsx";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { AuthProvider } from "./Context/AuthContext.jsx";
 
 const router = createBrowserRouter([
   {

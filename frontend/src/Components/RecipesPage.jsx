@@ -1,3 +1,4 @@
+import Carousel from "./Carousel";
 import Navbar from "./Navbar";
 export default function RecipesPage() {
   return (

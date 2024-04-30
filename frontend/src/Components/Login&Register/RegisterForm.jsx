@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
   const {
@@ -10,6 +11,11 @@ export default function RegisterForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    if (data.password != data.confirm_password) {
+      console.log("RRR");
+      setError("confirm_password", { message: "Passwords don't match" });
+      return 0;
+    }
     try {
       const response = await axios.post(
         "http://localhost:8000/api/sign_up",
@@ -51,10 +57,27 @@ export default function RegisterForm() {
           })}
           className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
           type="password"
-          placeholder="Password"
+          placeholder="Choose password"
         />
         {errors.password && (
           <div className="text-sm text-red-400">{errors.password.message}</div>
+        )}
+        <input
+          {...register("confirm_password", {
+            required: "confirm_Password is required",
+            minLength: {
+              value: 3,
+              message: "Password must have at least 3 characters",
+            },
+          })}
+          className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
+          type="password"
+          placeholder="Confirm password"
+        />
+        {errors.confirm_password && (
+          <div className="text-sm text-red-400">
+            {errors.confirm_password.message}
+          </div>
         )}
       </div>
 
@@ -68,6 +91,11 @@ export default function RegisterForm() {
       {errors.root && (
         <div className="text-sm text-red-400">{errors.root.message}</div>
       )}
+      <div className="mt-2 text-base">
+        <Link to="/login">
+          Already have an account? <span className="text-blue-600">Log in</span>
+        </Link>
+      </div>
     </form>
   );
 }

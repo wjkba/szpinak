@@ -11,6 +11,7 @@ export default function Carousel({ recipes = [] }) {
     swipe: true,
     swipeToSlide: true,
     touchMove: true,
+    dragable: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -23,6 +24,7 @@ export default function Carousel({ recipes = [] }) {
           swipe: true,
           swipeToSlide: true,
           touchMove: true,
+          dragable: false,
         },
       },
     ],

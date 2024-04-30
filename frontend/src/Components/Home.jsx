@@ -1,15 +1,16 @@
 import Carousel from "./Carousel";
 import MenuModal from "./MenuModal";
 import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Link, ScrollRestoration } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 export default function Home() {
-  // todo: Dodaj state management do recipes variables i rozsylaj je po aplikacji
-  // RECIPES
+  // TODO: recipes powinny byc pobierane raz przy wejscu do aplikacji
+
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+
   const apiUrl = "http://localhost:8000/api";
 
   const [recipes, setRecipes] = useState([]);
@@ -30,12 +31,14 @@ export default function Home() {
     setLoading(true);
     try {
       const recipesResponse = await axios.get(`${apiUrl}/recipes`);
+      console.log(recipesResponse);
       setRecipes(recipesResponse.data);
       setLoading(false);
     } catch (error) {
       console.error(error);
       setLoading(false);
     }
+    console.log();
   };
 
   return (
@@ -107,6 +110,7 @@ export default function Home() {
           </section>
         </div>
       </div>
+      <ScrollRestoration />
     </>
   );
   function chooseRandomElements(list, numElements) {

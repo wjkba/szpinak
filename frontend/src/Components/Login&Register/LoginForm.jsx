@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
@@ -42,6 +43,11 @@ export default function LoginForm() {
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-2 place-items-center lg:min-w-[20rem]"
         >
+          {isLoggedIn ? (
+            <p className="bg-yellow-200 w-full text-center">logged in</p>
+          ) : (
+            <p className="bg-yellow-200 w-full text-center">not logged in</p>
+          )}
           <div className="grid gap-2 mb-4 w-full">
             <input
               {...register("username", {
@@ -88,7 +94,11 @@ export default function LoginForm() {
           {errors.root && (
             <div className="text-sm text-red-400">{errors.root.message}</div>
           )}
-          {isLoggedIn ? <p>logged in</p> : <p>not logged in</p>}
+          <div className="mt-2 text-base">
+            <Link to="/register">
+              Not a member? <span className="text-blue-600">Sign up</span>
+            </Link>
+          </div>
         </form>
       )}
     </>

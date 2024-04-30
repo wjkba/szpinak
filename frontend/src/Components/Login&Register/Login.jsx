@@ -17,13 +17,17 @@ export default function Login() {
 
   return (
     <div className="lg:text-lg">
-      <div className="flex w-full justify-between items-center p-4 pl-0 bg-szpgray">
-        <button
-          className="bg-szpgray min-w-[5rem] rounded cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
-          <FaArrowLeftLong className="ml-8" />
-        </button>
+      <div className="lg:py-5 lg:px-0 h-[64px] grid place-items-center p-4 bg-szpgray">
+        <div className="w-full lg:px-[120px] flex  justify-between  items-center max-w-[1300px]">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex gap-2 items-center"
+          >
+            <div className="bg-white rounded p-1  flex justify-center min-w-[5rem]">
+              <FaArrowLeftLong size={20} />
+            </div>
+          </button>
+        </div>
       </div>
 
       <div className="grid place-items-center bg-szpgray mt-[6rem]">
