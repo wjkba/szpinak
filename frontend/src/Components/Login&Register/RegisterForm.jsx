@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
   const {
@@ -9,6 +9,7 @@ export default function RegisterForm() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     if (data.password != data.confirm_password) {
@@ -22,6 +23,7 @@ export default function RegisterForm() {
         data
       );
       console.log(response);
+      navigate("/login");
     } catch (error) {
       setError("root", { message: error.response.data.detail });
     }

@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import { useNavigate, useParams, ScrollRestoration } from "react-router-dom";
-import { displayRating } from "./RecipeCard";
+import { displayRating } from "./utils";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";

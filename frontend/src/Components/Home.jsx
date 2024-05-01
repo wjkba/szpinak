@@ -44,6 +44,7 @@ export default function Home() {
 
   return (
     <>
+      <Navbar />
       <div className="px-8 py-4 flex bg-pink-200 items-center justify-between">
         <div className="flex gap-4">
           <Link to="/login" className="px-2 bg-white">
@@ -64,12 +65,12 @@ export default function Home() {
           <Link to="/404" className="px-2 bg-white ">
             404
           </Link>
+          <button onClick={checkToken}>check token</button>
         </div>
         <div className={isLoggedIn ? "bg-green-200 p-4" : "bg-yellow-200 p-4"}>
           <p>{isLoggedIn ? "logged in" : "not logged in"}</p>
         </div>
       </div>
-      <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
           <section id="introduction" className="mt-8 lg:my-[80px] mb-8">
@@ -117,5 +118,17 @@ export default function Home() {
   function chooseRandomElements(list, numElements) {
     const shuffled = list.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, numElements);
+  }
+  async function checkToken() {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/verify-token/${token}`
+      );
+      console.log(response.data.message);
+    } catch (error) {
+      console.log("not verified");
+    }
   }
 }

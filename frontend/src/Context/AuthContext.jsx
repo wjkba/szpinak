@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 // AuthContext tworzy nowy context object z domyslna wartoscia null
 const AuthContext = React.createContext();

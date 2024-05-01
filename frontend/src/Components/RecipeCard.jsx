@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { LuClock4 } from "react-icons/lu";
-import { GoStarFill } from "react-icons/go";
+import { displayRating } from "./utils";
 import PropTypes from "prop-types";
 
 export default function RecipeCard({ title, image, rating, time, id }) {
@@ -25,58 +25,10 @@ export default function RecipeCard({ title, image, rating, time, id }) {
   );
 }
 
-export function displayRating(number, classes = "") {
-  switch (number) {
-    case 1:
-      return (
-        <>
-          <GoStarFill className={classes} />
-        </>
-      );
-    case 2:
-      return (
-        <>
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-        </>
-      );
-    case 3:
-      return (
-        <>
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-        </>
-      );
-    case 4:
-      return (
-        <>
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-        </>
-      );
-    case 5:
-      return (
-        <>
-          {/* <img src="/images/sample-star.svg" className={classes} alt="" /> */}
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-          <GoStarFill className={classes} />
-        </>
-      );
-    default:
-      return <></>;
-  }
-}
-
 RecipeCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  time: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  image: PropTypes.string,
+  rating: PropTypes.number,
+  time: PropTypes.string,
+  id: PropTypes.number,
 };

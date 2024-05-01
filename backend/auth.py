@@ -18,6 +18,11 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = "7d6477978d331618e4316253809d5b1663a10295fc113b6725debe07cf31b712"
 ALGORITHM = "HS256"
 
+@router.get("/verify-token/{token}")
+async def test(token: str):
+  await get_current_user(token=token)
+  return {"message": "verified"}
+
 def create_access_token(data: dict, expires_delta: timedelta):
   to_encode = data.copy()
   expire = datetime.utcnow() + expires_delta # termin waznosci 30 minut od teraz

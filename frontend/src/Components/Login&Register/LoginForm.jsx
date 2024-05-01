@@ -25,6 +25,7 @@ export default function LoginForm() {
       );
       console.log(response);
       console.log(response.data.access_token);
+      localStorage.setItem("token", response.data.access_token);
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/");
@@ -37,14 +38,21 @@ export default function LoginForm() {
   return (
     <>
       {isLoggedIn ? (
-        <p>logged in</p>
+        <>
+          <p className="mb-4">logged in</p>
+          <button onClick={() => logout()} className="bg-pink-200 px-4 rounded">
+            logout
+          </button>
+        </>
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-2 place-items-center lg:min-w-[20rem]"
         >
           {isLoggedIn ? (
-            <p className="bg-yellow-200 w-full text-center">logged in</p>
+            <>
+              <p className="bg-yellow-200 w-full text-center">logged in</p>
+            </>
           ) : (
             <p className="bg-yellow-200 w-full text-center">not logged in</p>
           )}
@@ -103,4 +111,8 @@ export default function LoginForm() {
       )}
     </>
   );
+  function logout() {
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  }
 }
