@@ -1,6 +1,4 @@
 import Navbar from "./Navbar";
-import Carousel from "./Carousel";
-import { useEffect } from "react";
 import { useNavigate, useParams, ScrollRestoration } from "react-router-dom";
 import { displayRating } from "./RecipeCard";
 import { FaArrowLeftLong } from "react-icons/fa6";

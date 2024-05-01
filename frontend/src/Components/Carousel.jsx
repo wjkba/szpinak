@@ -1,5 +1,6 @@
 import Slider from "react-slick";
 import RecipeCard from "./RecipeCard";
+import PropTypes from "prop-types";
 
 export default function Carousel({ recipes = [] }) {
   var settings_x = {
@@ -49,13 +50,8 @@ export default function Carousel({ recipes = [] }) {
       </Slider>
     );
   }
-
-  // return (
-  //   <Slider className="-translate-x-2 max-w-[98vw]" {...settings}>
-  //     <RecipeCard />
-  //     <RecipeCard />
-  //     <RecipeCard />
-  //     <RecipeCard />
-  //   </Slider>
-  // );
 }
+
+Carousel.propTypes = {
+  recipes: PropTypes.array.isRequired,
+};

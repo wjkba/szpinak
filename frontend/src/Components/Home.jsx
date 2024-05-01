@@ -1,15 +1,16 @@
 import Carousel from "./Carousel";
-import MenuModal from "./MenuModal";
+
 import Navbar from "./Navbar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, ScrollRestoration } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 
 export default function Home() {
   // TODO: recipes powinny byc pobierane raz przy wejscu do aplikacji
+  // TODO: zmniejsz ilosc requestow
 
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   const apiUrl = "http://localhost:8000/api";
 

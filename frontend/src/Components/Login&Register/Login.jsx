@@ -3,18 +3,13 @@
 //   - napraw css
 //   - nie dodawaj register dopoki nie skonczys css
 
-import { useState } from "react";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useForm } from "react-hook-form";
 import LoginForm from "./LoginForm";
 
 //   - skopiuj login na register
 export default function Login() {
-  const [message, setMessage] = useState("default");
-  const [color, setColor] = useState("bg-yellow-200");
   const navigate = useNavigate();
-
   return (
     <div className="lg:text-lg">
       <div className="lg:py-5 lg:px-0 h-[64px] grid place-items-center p-4 bg-szpgray">
@@ -42,38 +37,4 @@ export default function Login() {
       </div>
     </div>
   );
-
-  function placeholderHandleLogin() {
-    if (username === "user" && password === "123") {
-      setMessage((m) => "success");
-      setColor((c) => "bg-green-200");
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } else {
-      setMessage((m) => (m = "error"));
-      setColor((c) => (c = "bg-red-200"));
-      setTimeout(() => {
-        setMessage((m) => "default");
-        setColor((c) => "bg-yellow-200");
-      }, 1500);
-    }
-  }
-}
-
-function Message({ msg, color }) {
-  if (msg === "default") {
-    return (
-      <div className={`${color} grid  min-h-[3rem]`}>
-        <p>login: user</p>
-        <p>password: 123</p>
-      </div>
-    );
-  } else {
-    return (
-      <div className={`${color} min-h-[3rem] grid place-items-center`}>
-        {msg}
-      </div>
-    );
-  }
 }

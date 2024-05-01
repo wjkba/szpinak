@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-export default function MenuModal({ handleToggleMenu, isMenu }) {
+export default function MenuModal({ handleToggleMenu }) {
   return (
     <div className=" top-0 fixed z-50 w-screen h-screen bg-szpgray">
       <div className="mb-12">
@@ -31,3 +32,8 @@ export default function MenuModal({ handleToggleMenu, isMenu }) {
     </div>
   );
 }
+
+MenuModal.propTypes = {
+  handleToggleMenu: PropTypes.func,
+  isMenu: PropTypes.bool,
+};

@@ -1,11 +1,6 @@
 import "./App.css";
-import { useState } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
-  ScrollRestoration,
-} from "react-router-dom";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login&Register/Login.jsx";
