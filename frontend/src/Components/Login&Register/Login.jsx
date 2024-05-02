@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import LoginForm from "./LoginForm";

@@ -6,6 +6,7 @@ export default {
       colors: {
         szpgray: "#F4F4F4",
         szpgreen: "#82B536",
+        szppurple: "#3F3D56",
       },
       screens: {
         xs: { max: "350px" },

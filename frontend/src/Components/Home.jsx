@@ -45,32 +45,6 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="px-8 py-4 flex bg-pink-200 items-center justify-between">
-        <div className="flex gap-4">
-          <Link to="/login" className="px-2 bg-white">
-            Login
-          </Link>
-          <Link to="/register" className="px-2 bg-white ">
-            Register
-          </Link>
-          <Link to="/recipes" className="px-2 bg-white ">
-            RecipesPage
-          </Link>
-          <Link to="/addrecipe" className="px-2 bg-white ">
-            AddRecipeForm
-          </Link>
-          <Link to="/about" className="px-2 bg-white ">
-            AboutPage
-          </Link>
-          <Link to="/404" className="px-2 bg-white ">
-            404
-          </Link>
-          <button onClick={checkToken}>check token</button>
-        </div>
-        <div className={isLoggedIn ? "bg-green-200 p-4" : "bg-yellow-200 p-4"}>
-          <p>{isLoggedIn ? "logged in" : "not logged in"}</p>
-        </div>
-      </div>
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
           <section id="introduction" className="mt-8 lg:my-[80px] mb-8">

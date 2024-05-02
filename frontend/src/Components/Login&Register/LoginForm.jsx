@@ -28,7 +28,7 @@ export default function LoginForm() {
       localStorage.setItem("token", response.data.access_token);
       setIsLoggedIn(true);
       setTimeout(() => {
-        navigate("/");
+        navigate("/account");
       }, 1000);
     } catch (error) {
       setError("root", { message: error.response.data.detail });
@@ -46,13 +46,6 @@ export default function LoginForm() {
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-2 place-items-center lg:min-w-[20rem]"
         >
-          {isLoggedIn ? (
-            <>
-              <p className="bg-yellow-200 w-full text-center">logged in</p>
-            </>
-          ) : (
-            <p className="bg-yellow-200 w-full text-center">not logged in</p>
-          )}
           <div className="grid gap-2 mb-4 w-full">
             <input
               {...register("username", {

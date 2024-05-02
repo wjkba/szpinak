@@ -20,8 +20,10 @@ ALGORITHM = "HS256"
 
 @router.get("/verify-token/{token}")
 async def test(token: str):
-  await get_current_user(token=token)
-  return {"message": "verified"}
+  user = await get_current_user(token=token)
+  return {"message": "verified", "username": user["username"]}
+
+
 
 def create_access_token(data: dict, expires_delta: timedelta):
   to_encode = data.copy()

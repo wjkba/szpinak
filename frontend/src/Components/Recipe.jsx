@@ -5,6 +5,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
 import { FaPrint } from "react-icons/fa";
+import axios from "axios";
 import data from "../data.json";
 
 export default function Recipe() {
@@ -12,6 +13,19 @@ export default function Recipe() {
   const params = useParams();
   const recipeId = Number(params.recipeId);
   const recipe = data.find((element) => element.id === recipeId);
+  const handleSaveRecipe = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://127.0.0.1:8000/verify-token/${token}`
+      );
+      if (response.data.message === "verified") {
+        console.log("saved");
+      }
+    } catch (error) {
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -49,7 +63,10 @@ export default function Recipe() {
                   </p>
                 </div>
                 <div className="flex gap-5 ">
-                  <button className="p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2">
+                  <button
+                    onClick={() => handleSaveRecipe()}
+                    className="p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2"
+                  >
                     <FaBookmark />
                     <p>save recipe</p>
                   </button>

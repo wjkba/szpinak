@@ -9,9 +9,12 @@ import Recipe from "./Components/Recipe.jsx";
 import NotFound from "./Components/404.jsx";
 import RecipesPage from "./Components/RecipesPage.jsx";
 import AboutPage from "./Components/AboutPage.jsx";
-import AddRecipeForm from "./Components/AddRecipeForm.jsx";
+import AddRecipeForm from "./Components/AddRecipe/AddRecipeForm.jsx";
 import { AuthProvider } from "./Context/AuthContext.jsx";
 import Account from "./Components/Account.jsx";
+import SavedRecipesPage from "./Components/SavedRecipes/SavedRecipesPage.jsx";
+import MyRecipesPage from "./Components/MyRecipes/MyRecipesPage.jsx";
+import AddRecipePage from "./Components/AddRecipe/AddRecipePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,18 @@ const router = createBrowserRouter([
   {
     path: "/account",
     element: <Account />,
+  },
+  {
+    path: "/saved",
+    element: <SavedRecipesPage />,
+  },
+  {
+    path: "/my-recipes",
+    element: <MyRecipesPage />,
+  },
+  {
+    path: "/add",
+    element: <AddRecipePage />,
   },
   {
     path: "/recipe/:recipeId",
