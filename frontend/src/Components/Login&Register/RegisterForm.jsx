@@ -30,74 +30,88 @@ export default function RegisterForm() {
     console.log(data);
   };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="grid gap-2 place-items-center lg:min-w-[20rem]"
-    >
-      <div className="grid gap-2 mb-4 w-full">
-        <input
-          {...register("username", {
-            required: "Username is required",
-            minLength: {
-              value: 3,
-              message: "Username must have at least 3 characters",
-            },
-          })}
-          className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
-          placeholder="Username"
-        />
-        {errors.username && (
-          <div className="text-sm text-red-400">{errors.username.message}</div>
-        )}
-        <input
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 3,
-              message: "Password must have at least 3 characters",
-            },
-          })}
-          className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
-          type="password"
-          placeholder="Choose password"
-        />
-        {errors.password && (
-          <div className="text-sm text-red-400">{errors.password.message}</div>
-        )}
-        <input
-          {...register("confirm_password", {
-            required: "confirm_Password is required",
-            minLength: {
-              value: 3,
-              message: "Password must have at least 3 characters",
-            },
-          })}
-          className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
-          type="password"
-          placeholder="Confirm password"
-        />
-        {errors.confirm_password && (
-          <div className="text-sm text-red-400">
-            {errors.confirm_password.message}
-          </div>
-        )}
-      </div>
-
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="rounded p-2 bg-[#3F3D56] text-white w-full"
+    <>
+      <img
+        className="mb-6 max-w-[12rem]"
+        src="/images/register-undraw.svg"
+        alt=""
+      />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid gap-2 place-items-center lg:min-w-[20rem]"
       >
-        {isSubmitting ? "Loading..." : "Register"}
-      </button>
-      {errors.root && (
-        <div className="text-sm text-red-400">{errors.root.message}</div>
-      )}
-      <div className="mt-2 text-base">
-        <Link to="/login">
-          Already have an account? <span className="text-blue-600">Log in</span>
-        </Link>
-      </div>
-    </form>
+        <p className="text-2xl w-full font-medium mb-2">Sign up now</p>
+
+        <div className="grid gap-2 mb-1 w-full">
+          <input
+            {...register("username", {
+              required: "Username is required",
+              minLength: {
+                value: 3,
+                message: "Username must have at least 3 characters",
+              },
+            })}
+            className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
+            placeholder="Username"
+          />
+          {errors.username && (
+            <div className="text-sm text-red-400">
+              {errors.username.message}
+            </div>
+          )}
+          <input
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 3,
+                message: "Password must have at least 3 characters",
+              },
+            })}
+            className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
+            type="password"
+            placeholder="Choose password"
+          />
+          {errors.password && (
+            <div className="text-sm text-red-400">
+              {errors.password.message}
+            </div>
+          )}
+          <input
+            {...register("confirm_password", {
+              required: "confirm_Password is required",
+              minLength: {
+                value: 3,
+                message: "Password must have at least 3 characters",
+              },
+            })}
+            className="bg-red p-1 w-full rounded border-2 border-[#214e9c]/14"
+            type="password"
+            placeholder="Confirm password"
+          />
+          {errors.confirm_password && (
+            <div className="text-sm text-red-400">
+              {errors.confirm_password.message}
+            </div>
+          )}
+        </div>
+
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="rounded p-2 bg-[#3F3D56] text-white w-full"
+        >
+          {isSubmitting ? "Loading..." : "Register"}
+        </button>
+        {errors.root && (
+          <div className="text-sm text-red-400">{errors.root.message}</div>
+        )}
+        <div className="mt-2 text-base">
+          <Link to="/login">
+            Already have an account?{" "}
+            <span className="text-blue-600">Log in</span>
+          </Link>
+        </div>
+      </form>
+    </>
   );
 }

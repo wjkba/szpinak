@@ -32,10 +32,10 @@ export default function Recipe() {
       <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] lg:px-[120px] w-full p-2">
-          <section id="recipe__info" className="lg:mt-[20px] mt-8 mb-8">
-            <div className="p-4 pl-0">
+          <section id="recipe__info" className="mt-[20px] mb-8">
+            <div className="p-4 px-8 mb-[20px] pl-0">
               <button
-                className="bg-szpgray min-w-[5rem] grid place-items-center p-2 rounded cursor-pointer"
+                className="bg-szpgray min-w-[7rem] grid place-items-center p-2 rounded cursor-pointer"
                 onClick={() => navigate(-1)}
               >
                 <FaArrowLeftLong size={20} />

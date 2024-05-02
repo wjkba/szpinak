@@ -48,16 +48,19 @@ export default function Account() {
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
           {!isLoading ? (
             <div>
-              <div className="flex gap-4 mb-6 items-center">
+              <div className=" flex gap-4 mb-6 items-center">
+                <div
+                  className={`${
+                    isImageLoaded ? "hidden" : "visible"
+                  } bg-[#F4F4F4] min-h-[3.5rem]  rounded-full min-w-[3.5rem]`}
+                ></div>
                 <img
                   className={`${
-                    !isImageLoaded
-                      ? "bg-gray-200 rounded-full min-w-[3.5rem]"
-                      : ""
+                    isImageLoaded ? "visible" : "hidden"
                   } max-w-[3.5rem]`}
-                  onLoad={handleImageLoad}
                   src="https://avatar.iran.liara.run/public"
                   alt=""
+                  onLoad={handleImageLoad}
                 />
                 <div>
                   <p className="text-3xl ">{username}</p>
@@ -70,27 +73,29 @@ export default function Account() {
                   </div>
                 </div>
               </div>
-              <Link
-                to="/saved"
-                className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
-              >
-                <RiBookmarkLine size={25} />
-                <p>Saved recipes</p>
-              </Link>
-              <Link
-                to="/my-recipes"
-                className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
-              >
-                <RiFilePaperLine size={25} />
-                <p>My recipes</p>
-              </Link>
-              <Link
-                to="/add"
-                className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
-              >
-                <RiFileAddLine size={25} />
-                <p>Add a recipe</p>
-              </Link>
+              <div className="lg:max-w-[25rem]">
+                <Link
+                  to="/saved"
+                  className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
+                >
+                  <RiBookmarkLine size={25} />
+                  <p>Saved recipes</p>
+                </Link>
+                <Link
+                  to="/my-recipes"
+                  className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
+                >
+                  <RiFilePaperLine size={25} />
+                  <p>My recipes</p>
+                </Link>
+                <Link
+                  to="/add"
+                  className="hover:text-white hover:bg-szppurple font-medium gap-2 flex items-center p-4 border-b-2 border-[#E1E1E1]"
+                >
+                  <RiFileAddLine size={25} />
+                  <p>Add a recipe</p>
+                </Link>
+              </div>
             </div>
           ) : (
             <div></div>
