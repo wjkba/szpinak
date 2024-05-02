@@ -11,7 +11,7 @@ export default function RecipeCard({ title, image, rating, time, id }) {
           <img className="lg:max-h-[20rem] rounded-md" src={image} alt="" />
         </div>
         <div className="flex flex-col justify-end p-2 pt-2">
-          <p className="font-bold mb-1">{title}</p>
+          <p className="truncate font-bold mb-1">{title}</p>
           <div className="flex gap-[2px] mb-2">
             {displayRating(rating, "text-szpgreen text-base")}
           </div>

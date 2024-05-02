@@ -1,25 +1,19 @@
-// to jest placeholder
-// todo:
-//   - napraw css
-//   - nie dodawaj register dopoki nie skonczys css
-
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import LoginForm from "./LoginForm";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
-//   - skopiuj login na register
 export default function Login() {
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  const { setIsLoggedIn } = useAuth();
   useEffect(() => {
     setIsLoading(true);
-    checkTokenStatus();
+    checkIfLoggedIn();
   }, []);
 
-  async function checkTokenStatus() {
+  async function checkIfLoggedIn() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
@@ -27,6 +21,9 @@ export default function Login() {
       );
       if (response.data.message === "verified") {
         setIsLoggedIn(true);
+        setTimeout(() => {
+          navigate("/account");
+        }, 500);
       }
       setIsLoading(false);
     } catch (error) {

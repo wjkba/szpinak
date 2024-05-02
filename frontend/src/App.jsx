@@ -11,6 +11,7 @@ import RecipesPage from "./Components/RecipesPage.jsx";
 import AboutPage from "./Components/AboutPage.jsx";
 import AddRecipeForm from "./Components/AddRecipeForm.jsx";
 import { AuthProvider } from "./Context/AuthContext.jsx";
+import Account from "./Components/Account.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/account",
+    element: <Account />,
   },
   {
     path: "/recipe/:recipeId",

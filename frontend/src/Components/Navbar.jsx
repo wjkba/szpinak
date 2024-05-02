@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import MenuModal from "./MenuModal";
 import { FaRegUser } from "react-icons/fa";
+import { useAuth } from "../Context/AuthContext";
 
 function Navbar() {
   const [isMenu, setIsMenu] = useState(false);
+  const { isLoggedIn } = useAuth();
   function handleToggleMenu() {
     setIsMenu((m) => !m);
   }
@@ -31,7 +33,10 @@ function Navbar() {
             <Link to="/about" className="hover:font-medium cursor-pointer">
               about
             </Link>
-            <Link to="/login" className="hover:font-medium cursor-pointer">
+            <Link
+              to={isLoggedIn ? "/account" : "/login"}
+              className="hover:font-medium cursor-pointer"
+            >
               <FaRegUser className="min-w-[2rem]" size={20} />
             </Link>
           </div>

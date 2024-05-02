@@ -40,9 +40,6 @@ export default function LoginForm() {
       {isLoggedIn ? (
         <>
           <p className="mb-4">logged in</p>
-          <button onClick={() => logout()} className="bg-pink-200 px-4 rounded">
-            logout
-          </button>
         </>
       ) : (
         <form
@@ -111,8 +108,4 @@ export default function LoginForm() {
       )}
     </>
   );
-  function logout() {
-    setIsLoggedIn(false);
-    localStorage.removeItem("token");
-  }
 }
