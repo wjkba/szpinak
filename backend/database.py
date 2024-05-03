@@ -18,10 +18,15 @@ async def fetch_one_recipe(title):
   document = await recipes_collection.find_one({"title": title})
   return document
 
-# TODO: Fix recipe by id
 async def fetch_recipe_by_id(recipe_id: int):
-  document = await recipes_collection.find_one({"id": recipe_id})
-  return document
+  recipe = []
+  recipe_id = int(recipe_id)
+  cursor = recipes_collection.find({"id": recipe_id})
+  async for document in cursor:
+    del document["_id"]
+    recipe.append(document)
+  return recipe
+  
 
 
 async def fetch_all_recipes():
@@ -53,13 +58,13 @@ async def fetch_most_viewed_recipes(n):
 
 # obok object id tworze proste liczbowe id
 
-async def create_new_recipe(new_recipe):
+async def create_new_recipe(new_recipe, username):
   ids = []
   cursor = recipes_collection.find({})
   async for document in cursor:
     ids.append(document["id"])
   date_string = (datetime.now()).strftime("%Y-%m-%d")
-  document = Recipe(id=max(ids)+1, title=new_recipe['title'], image=new_recipe['image'], description=new_recipe['description'], views=1, rating=5, time=new_recipe['time'], ingredients=new_recipe['ingredients'], instructions=new_recipe['instructions'], date=date_string)
+  document = Recipe(id=max(ids)+1, author=username, title=new_recipe['title'], image=new_recipe['image'], description=new_recipe['description'], views=1, rating=5, time=new_recipe['time'], ingredients=new_recipe['ingredients'], instructions=new_recipe['instructions'], date=date_string)
   result = await recipes_collection.insert_one(document.model_dump())
   return result
 
@@ -122,5 +127,13 @@ async def fetch_saved_recipes(username):
       saved_recipes.append(recipe)
   return saved_recipes
 
+async def fetch_user_recipes(username):
+  user_recipes = []
+  cursor = recipes_collection.find({"author": username})
+  async for document in cursor:
+    del document["_id"]
+    user_recipes.append(document)
+  return user_recipes
 
+  
 

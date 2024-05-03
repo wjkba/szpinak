@@ -26,6 +26,7 @@ export default function LoginForm() {
       console.log(response);
       console.log(response.data.access_token);
       localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("username", data.username);
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/account");

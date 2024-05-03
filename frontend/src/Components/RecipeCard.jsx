@@ -8,7 +8,11 @@ export default function RecipeCard({ title, image, rating, time, id }) {
     <div className="hover:scale-95 lg:text-lg  scale-90 transition-transform cursor-pointer shadow-md rounded-md">
       <Link className="" to={`/recipe/${id}`}>
         <div className="row-span-3">
-          <img className="lg:max-h-[20rem] rounded-md" src={image} alt="" />
+          <img
+            className="lg:max-h-[10rem] object-fill w-full  rounded-md"
+            src={image}
+            alt=""
+          />
         </div>
         <div className="flex flex-col justify-end p-2 pt-2">
           <p className="truncate font-bold mb-1">{title}</p>

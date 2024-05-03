@@ -19,7 +19,8 @@ from database import (
   add_to_saved,
   remove_from_saved,
   fetch_saved_recipes,
-  fetch_recipe_by_id
+  fetch_recipe_by_id,
+  fetch_user_recipes
 )
 from auth import (
   get_password_hash,
@@ -60,6 +61,7 @@ async def get_recipe_by_id(recipe_id):
   response = await fetch_recipe_by_id(recipe_id=recipe_id)
   return response
 
+
 @app.get("/api/recipes/newest")
 async def get_newest(n: int):
   response = await fetch_newest_recipes(n)
@@ -70,15 +72,18 @@ async def get_trending(n: int):
   response = await fetch_most_viewed_recipes(n)
   return response
 
-@app.get("/api/recipes/{user}")
-async def get_user_recipes(user):
-  return 1
+@app.get("/api/recipes/{username}")
+async def get_user_recipes(username: str):
+  response = await fetch_user_recipes(username=username)
+  return response
 
 
 # CREATE RECIPE
 @app.post("/api/recipe", tags=["create"])
-async def post_recipe(new_recipe: NewRecipe):
-  response = await create_new_recipe(new_recipe.model_dump())
+async def post_recipe(new_recipe: NewRecipe, current_user = Depends(get_current_user)):
+  if current_user is None:
+    return{"message": "please log in"}
+  response = await create_new_recipe(new_recipe.model_dump(), username=current_user["username"])
   if response:
     return {"message": f"Recipe has been created"}
   raise HTTPException(400, detail="Something went wrong")  
@@ -106,7 +111,7 @@ async def sign_up(new_user: NewUser):
   response = await create_user(user.model_dump())
   if response:
     return response
-  return HTTPException(status_code=400, detail="Something went wrong")
+  raise HTTPException(status_code=400, detail="Something went wrong")
 
 @app.post("/api/save_recipe/{recipe_id}")
 async def save_recipe(recipe_id: int, current_user = Depends(get_current_user)):

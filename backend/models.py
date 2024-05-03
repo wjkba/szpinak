@@ -4,6 +4,7 @@ from typing import List
 
 class Recipe(BaseModel):
       id: int
+      author: str
       title: str = Field(min_length=1, max_length=20)
       image: str = Field(min_length=1)
       description: str = Field(min_length=1)

@@ -108,6 +108,7 @@ export default function Account() {
   function logout() {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     navigate("/");
   }
 }

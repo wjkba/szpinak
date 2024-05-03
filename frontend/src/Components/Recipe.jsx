@@ -6,19 +6,31 @@ import { FaBookmark } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
 import { FaPrint } from "react-icons/fa";
 import axios from "axios";
-import data from "../data.json";
 import { useEffect, useState } from "react";
 
 export default function Recipe() {
   const [isSaved, setIsSaved] = useState(false);
+  const [recipe, setRecipe] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
   const recipeId = Number(params.recipeId);
-  const recipe = data.find((element) => element.id === recipeId);
+  // const recipe = data.find((element) => element.id === recipeId);
 
   useEffect(() => {
+    fetchRecipe();
     fetchSavedRecipes();
   }, []);
+
+  const fetchRecipe = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/recipe/${recipeId}`
+      );
+      setRecipe(...response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchSavedRecipes = async () => {
     try {
@@ -87,6 +99,9 @@ export default function Recipe() {
                     <div className="flex  gap-[2px] lg:mb-4 mb-2">
                       {displayRating(recipe.rating, "text-szpgreen lg:text-xl")}
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <p>Author: {recipe.author}</p>
                   </div>
                   <p className="mb-4 lg:text-lg lg:max-w-[30rem] lg:mb-6">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
