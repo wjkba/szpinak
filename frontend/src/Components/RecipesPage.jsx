@@ -3,22 +3,18 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 export default function RecipesPage() {
-  const [isSaved, setIsSaved] = useState(false);
+  const [recipes, setRecipes] = useState([]);
   useEffect(() => {
-    fetchSavedRecipes();
+    fetchRecipes();
   }, []);
-  const fetchSavedRecipes = async () => {
+  async function fetchRecipes() {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:8000/saved-recipes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const saved_recipes = response.data;
-      console.log(saved_recipes);
+      const response = await axios.get("http://127.0.0.1:8000/api/recipes");
+      setRecipes(response.data);
     } catch (error) {
-      console.log(error);
+      console.error();
     }
-  };
+  }
   return (
     <>
       <Navbar />
