@@ -7,23 +7,56 @@ import { FaShare } from "react-icons/fa";
 import { FaPrint } from "react-icons/fa";
 import axios from "axios";
 import data from "../data.json";
+import { useEffect, useState } from "react";
 
 export default function Recipe() {
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
   const recipeId = Number(params.recipeId);
   const recipe = data.find((element) => element.id === recipeId);
-  const handleSaveRecipe = async () => {
+
+  useEffect(() => {
+    fetchSavedRecipes();
+  }, []);
+
+  const fetchSavedRecipes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://127.0.0.1:8000/verify-token/${token}`
+      const response = await axios.get(`http://localhost:8000/saved-recipes`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const saved_recipes = response.data;
+      console.log(response.data);
+      let isRecipeSaved = saved_recipes.some(
+        (recipe) => recipe.id === parseInt(recipeId)
       );
-      if (response.data.message === "verified") {
-        console.log("saved");
+      if (isRecipeSaved) {
+        setIsSaved(true);
       }
     } catch (error) {
-      navigate("/login");
+      console.log(error);
+    }
+  };
+
+  const handleSaveRecipe = async () => {
+    if (isSaved) {
+      navigate("/saved");
+    } else {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          `http://localhost:8000/api/save_recipe/${recipeId}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setIsSaved(true);
+        console.log(response);
+      } catch (error) {
+        navigate("/login");
+      }
     }
   };
 
@@ -65,10 +98,10 @@ export default function Recipe() {
                 <div className="flex gap-5 ">
                   <button
                     onClick={() => handleSaveRecipe()}
-                    className="p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2"
+                    className={`p-2 pl-4 pr-4 rounded bg-szpgreen hover:bg-[#404040] text-white flex items-center gap-2`}
                   >
                     <FaBookmark />
-                    <p>save recipe</p>
+                    <p>{!isSaved ? "save recipe" : "saved"}</p>
                   </button>
                   <button className="text-[#404040] hover:text-black flex gap-2 items-center">
                     <FaShare />

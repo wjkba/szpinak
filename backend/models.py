@@ -1,5 +1,6 @@
 # do tworzenie json schemas
 from pydantic import BaseModel, Field
+from typing import List
 
 class Recipe(BaseModel):
       id: int
@@ -24,6 +25,7 @@ class NewRecipe(BaseModel):
 class User(BaseModel):
       username: str
       password: str
+      saved: List[str]
 
 class NewUser(BaseModel):
       username: str

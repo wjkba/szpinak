@@ -16,6 +16,10 @@ from database import (
   remove_recipe,
   create_new_recipe,
   create_user,
+  add_to_saved,
+  remove_from_saved,
+  fetch_saved_recipes,
+  fetch_recipe_by_id
 )
 from auth import (
   get_password_hash,
@@ -51,9 +55,10 @@ async def get_recipes():
   response = await fetch_all_recipes()
   return response
 
-@app.get("/api/recipe/{id}")
-async def get_recipe_by_id(id):
-  return 1
+@app.get("/api/recipe/{recipe_id}")
+async def get_recipe_by_id(recipe_id):
+  response = await fetch_recipe_by_id(recipe_id=recipe_id)
+  return response
 
 @app.get("/api/recipes/newest")
 async def get_newest(n: int):
@@ -97,23 +102,31 @@ async def delete_recipe(id: int):
 # USERS
 @app.post("/api/sign_up", tags=["users"])
 async def sign_up(new_user: NewUser):
-  user = User(username=new_user.username, password=get_password_hash(new_user.password))
+  user = User(username=new_user.username, password=get_password_hash(new_user.password), saved=[])
   response = await create_user(user.model_dump())
   if response:
     return response
   return HTTPException(status_code=400, detail="Something went wrong")
 
-
-
-
-
-
-
-
+@app.post("/api/save_recipe/{recipe_id}")
+async def save_recipe(recipe_id: int, current_user = Depends(get_current_user)):
+  if current_user is None:
+    return{"message": "please log in"}
+  response = await add_to_saved(recipe_id=recipe_id,username=current_user["username"])
+  return response
   
 
+@app.post("/api/unsave_recipe/{recipe_id}")
+async def unsave_recipe(recipe_id:int, current_user = Depends(get_current_user)):
+  if current_user is None:
+    return{"message": "please log in"}
+  response = await remove_from_saved(recipe_id=recipe_id, username=current_user["username"])
+  return response
 
-
-
-
-
+@app.get("/saved-recipes")
+async def get_saved_recipes(current_user = Depends(get_current_user)):
+  if current_user is None:
+    return{"message": "please log in"}
+  saved_recipes = await fetch_saved_recipes(current_user["username"])
+  return saved_recipes
+  

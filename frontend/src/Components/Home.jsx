@@ -3,14 +3,11 @@ import Carousel from "./Carousel";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, ScrollRestoration } from "react-router-dom";
-import { useAuth } from "../Context/AuthContext";
+import { ScrollRestoration } from "react-router-dom";
 
 export default function Home() {
   // TODO: recipes powinny byc pobierane raz przy wejscu do aplikacji
   // TODO: zmniejsz ilosc requestow
-
-  const { isLoggedIn } = useAuth();
 
   const apiUrl = "http://localhost:8000/api";
 
@@ -92,17 +89,5 @@ export default function Home() {
   function chooseRandomElements(list, numElements) {
     const shuffled = list.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, numElements);
-  }
-  async function checkToken() {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/verify-token/${token}`
-      );
-      console.log(response.data.message);
-    } catch (error) {
-      console.log("not verified");
-    }
   }
 }

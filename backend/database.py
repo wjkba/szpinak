@@ -18,6 +18,12 @@ async def fetch_one_recipe(title):
   document = await recipes_collection.find_one({"title": title})
   return document
 
+# TODO: Fix recipe by id
+async def fetch_recipe_by_id(recipe_id: int):
+  document = await recipes_collection.find_one({"id": recipe_id})
+  return document
+
+
 async def fetch_all_recipes():
   recipes = []
   cursor = recipes_collection.find({})
@@ -76,5 +82,45 @@ async def create_user(User):
   document = User
   await users_collection.insert_one(document)
   return {"message": f"user: {username} has been created."}
+
+# async def add_to_saved(recipe_id, username):
+#   document = await users_collection.find_one({"username": username})
+#   if document:
+#     isAlreadySaved = await users_collection.find_one({"username": username, "saved": recipe_id})
+#     if(isAlreadySaved):
+#       return {"message": "Recipe is already saved"}
+#     await users_collection.update_one({"username": username}, {"$push": {"saved": recipe_id}})
+#     return {"message": "Recipe has been saved"}
+#   else:
+#     raise HTTPException(status_code=400, detail="Something went wrong")
+
+async def add_to_saved(recipe_id, username):
+  document = await users_collection.find_one({"username": username})
+  if document:
+      recipe = await recipes_collection.find_one({"id": recipe_id})
+      await users_collection.update_one({"username": username}, {"$push": {"saved": recipe}})
+      return {"message": "Recipe has been saved"}
+  else:
+    raise HTTPException(status_code=400, detail="Something went wrong")
+  
+async def remove_from_saved(recipe_id, username):
+  document = await users_collection.find_one({"username": username})
+  if document:
+    await users_collection.update_one({"username": username}, {"$pull": {"saved": {"id": recipe_id}}})
+    return {"message": "Recipe has been removed from saved"}
+  else:
+    raise HTTPException(status_code=400, detail="Something went wrong")
+  
+
+async def fetch_saved_recipes(username):
+  saved_recipes = []
+  document = await users_collection.find_one({"username": username})
+  if document:
+    saved = document.get("saved", [])
+    for recipe in saved:
+      del recipe["_id"]
+      saved_recipes.append(recipe)
+  return saved_recipes
+
 
 
