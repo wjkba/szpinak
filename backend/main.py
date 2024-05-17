@@ -7,6 +7,13 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import Optional
 from models import Recipe, NewRecipe, User, NewUser
 
+# Image upload
+from PIL import Image
+from fastapi import File, UploadFile
+from fastapi.staticfiles import StaticFiles
+import secrets
+
+#
 from database import (
   fetch_one_recipe,
   fetch_all_recipes,
@@ -32,7 +39,7 @@ import auth
 app = FastAPI()
 app.include_router(auth.router)
 
-# pozwalamy na headers, methods zeby sie komunikowalo git
+# pozwalamy na headers, methods zeby sie komunikowalo 
 origins = ['*']
 
 app.add_middleware(
@@ -42,6 +49,37 @@ app.add_middleware(
   allow_methods=["*"],
   allow_headers=["*"],
 )
+
+# static file setup config
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# UPLOAD IMAGE
+@app.post("/upload/recipe-image")
+async def create_upload_recipe(file: UploadFile = File(...)): #current_user = Depends(get_current_user)
+  FILEPATH = "./static/images"
+  filename = file.filename
+  extension = filename.split(".")[1]
+  if extension not in ["png", "jpg"]:
+    raise HTTPException(status_code=404, detail="File extension not allowed")
+  
+  # Tworzenie nazwy pliku
+  token_name = secrets.token_hex(10) + "." + extension 
+  generated_name = FILEPATH + token_name
+  file_content = await file.read()
+
+  with open(generated_name, "wb")as file:
+    file.write(file_content)
+
+  # Pillow
+  img = Image.open(generated_name)
+  img = img.resize(size= (600,200))
+  img.save(generated_name)
+  file.close()
+
+  file_url = "localhost:8000" + generated_name[1:]
+
+  return {"file_url": file_url}
+
 
 # AUTH CHECK
 @app.get("/authcheck", tags=["auth"])

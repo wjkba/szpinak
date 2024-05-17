@@ -4,7 +4,7 @@ import MenuModal from "./MenuModal";
 import { FaRegUser } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
 
-function Navbar() {
+function Navbar({ color = "szpgray" }) {
   const [isMenu, setIsMenu] = useState(false);
   const { isLoggedIn } = useAuth();
   function handleToggleMenu() {
@@ -16,7 +16,9 @@ function Navbar() {
       {isMenu && (
         <MenuModal handleToggleMenu={handleToggleMenu} isMenu={isMenu} />
       )}
-      <div className="lg:py-4 lg:px-0 grid place-items-center p-4 bg-szpgray">
+      <div
+        className={`lg:py-4 lg:px-0 grid place-items-center p-4 bg-${color}`}
+      >
         <div className="w-full lg:px-[120px] flex  justify-between  items-center max-w-[1300px]">
           <Link to={"/"} className="flex gap-2 items-center">
             <img src="/images/icon-spinach.png" alt="" />

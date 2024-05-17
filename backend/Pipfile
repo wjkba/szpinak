@@ -10,6 +10,8 @@ motor = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
+pillow = "*"
+aiofiles = "*"
 
 [dev-packages]
 
