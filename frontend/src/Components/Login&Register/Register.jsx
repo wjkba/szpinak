@@ -6,8 +6,8 @@ export default function Register() {
     <>
       <Navbar />
 
-      <div className="grid place-items-center bg-szpgray mt-[6rem]">
-        <div className=" rounded gird place-content-center  w-full bg-white p-4">
+      <div className="grid place-items-center  lg:mt-[6rem]">
+        <div className=" rounded gird place-content-center  w-full p-4">
           <div className="grid place-items-center">
             <RegisterForm />
           </div>

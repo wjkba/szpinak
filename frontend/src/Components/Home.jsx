@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="bg-offwhite">
       <Navbar />
       <div className="grid place-items-center">
         <div className="max-w-[450px] lg:max-w-[1300px] w-full lg:px-[120px]">
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
       </div>
       <ScrollRestoration />
-    </>
+    </div>
   );
   function chooseRandomElements(list, numElements) {
     const shuffled = list.sort(() => Math.random() - 0.5);

@@ -43,12 +43,13 @@ export default function LoginForm() {
           <p className="mb-4">logged in</p>
         </>
       ) : (
-        <>
+        <div className="bg-white lg:max-w-none max-w-[450px] lg:flex gap-16 shadow-sm border-2 w-full lg:w-auto p-4 lg:p-12 ">
           <img
-            className="mb-6 max-w-[12rem]"
+            className=" mb-6 max-w-[12rem]"
             src="/images/login-undraw.svg"
             alt=""
           />
+
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="grid gap-2 place-items-center lg:min-w-[20rem]"
@@ -100,13 +101,13 @@ export default function LoginForm() {
             {errors.root && (
               <div className="text-sm text-red-400">{errors.root.message}</div>
             )}
-            <div className="mt-2 text-base">
+            <div className="mt-2 text-sm w-full">
               <Link to="/register">
                 Not a member? <span className="text-blue-600">Sign up</span>
               </Link>
             </div>
           </form>
-        </>
+        </div>
       )}
     </>
   );

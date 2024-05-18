@@ -30,7 +30,7 @@ export default function RegisterForm() {
     console.log(data);
   };
   return (
-    <>
+    <div className="bg-white lg:max-w-none max-w-[450px] lg:flex gap-16 shadow-sm border-2 w-full lg:w-auto p-4 lg:p-12 ">
       <img
         className="mb-6 max-w-[12rem]"
         src="/images/register-undraw.svg"
@@ -105,13 +105,13 @@ export default function RegisterForm() {
         {errors.root && (
           <div className="text-sm text-red-400">{errors.root.message}</div>
         )}
-        <div className="mt-2 text-base">
+        <div className="mt-2 text-base w-full">
           <Link to="/login">
             Already have an account?{" "}
             <span className="text-blue-600">Log in</span>
           </Link>
         </div>
       </form>
-    </>
+    </div>
   );
 }

@@ -34,13 +34,13 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-offwhite">
       <Navbar />
 
       {!isLoading ? (
-        <div className="grid place-items-center bg-szpgray mt-[6rem]">
-          <div className=" rounded gird place-content-center  w-full bg-white p-4">
-            <div className="grid place-items-center">
+        <div className="grid place-items-center  lg:mt-[6rem]">
+          <div className=" rounded gird place-content-center  w-full  p-4">
+            <div className="grid place-items-center ">
               <LoginForm />
             </div>
           </div>
@@ -48,6 +48,6 @@ export default function Login() {
       ) : (
         <div></div>
       )}
-    </>
+    </div>
   );
 }

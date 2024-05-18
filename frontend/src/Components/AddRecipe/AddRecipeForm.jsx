@@ -8,7 +8,10 @@ export default function AddRecipeForm() {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState([{ ingredient: "" }]);
-  const [cookingTime, setCookingTime] = useState("");
+  const [cookingTime, setCookingTime] = useState({
+    time: "20",
+    timeType: "minutes",
+  });
   const [instructions, setInstructions] = useState("");
 
   const inputRef = useRef();
@@ -56,7 +59,7 @@ export default function AddRecipeForm() {
       console.log("All ingredients must have a value");
       return;
     }
-    if (cookingTime.trim() === "") {
+    if (cookingTime.time.trim() === "") {
       console.log("Cooking time is required");
       return;
     }
@@ -76,8 +79,8 @@ export default function AddRecipeForm() {
           title: title,
           image: imageUrl,
           description: description,
-          time: "20 mins",
-          ingredients: "marchewka",
+          time: String(cookingTime.time + " " + cookingTime.timeType),
+          ingredients: formatIngredients(),
           instructions: instructions,
         },
         {
@@ -90,33 +93,33 @@ export default function AddRecipeForm() {
     }
   };
 
+  const formatIngredients = () => {
+    const formattedArray = [];
+    console.log(ingredients);
+    for (let i in ingredients) {
+      formattedArray.push(ingredients[i].ingredient);
+    }
+    return formattedArray;
+  };
+
+  // TODO: napraw background i zmien wyglad
   return (
     <>
-      <button
-        onClick={() => {
-          console.log("🚀 ~ AddRecipeForm ~ title:", title);
-          console.log("🚀 ~ AddRecipeForm ~ description:", description);
-          console.log("🚀 ~ AddRecipeForm ~ imageUrl:", imageUrl);
-          console.log("🚀 ~ AddRecipeForm ~ ingredients:", ingredients);
-          console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
-          console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);
-        }}
-        className="bg-yellow-200 rounded"
-      >
-        check values
-      </button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="rounded bg-white lg:p-8 lg:max-w-[600px] w-full"
+        className="rounded shadow-md  bg-white lg:p-8 max-w-[600px] p-4 w-full"
       >
         <div className="flex flex-col ">
+          <h1 className="lg:text-4xl text-3xl mb-6 gri font-medium">
+            Add recipe
+          </h1>
           <div className="grid lg:flex mb-4 gap-2 ">
-            <div className="flex  w-full lg:max-w-[18rem] order-3 lg:order-none">
+            <div className="flex  w-full lg:max-w-[250px] order-3 lg:order-none">
               <DragDropImage setImageUrl={setImageUrl} />
             </div>
-            <div>
+            <div className="add-recipe-form">
               <div className="mb-2 ">
                 <label>
                   Title
@@ -124,7 +127,7 @@ export default function AddRecipeForm() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="mt-1 focus:border-szppurple/80 rounded outline-none border w-full"
+                    className="mt-1 focus:border-szppurple/80 rounded outline-none  w-full p-1 min-h-[30px] border-2"
                   />
                 </label>
               </div>
@@ -135,7 +138,7 @@ export default function AddRecipeForm() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     type="text"
-                    className="mt-1 focus:border-szppurple/80 rounded resize-none border min-h-[5rem] w-full"
+                    className="mt-1 focus:border-szppurple/80 rounded resize-none outline-none min-h-[5rem] w-full p-1  border-2"
                   />
                 </label>
               </div>
@@ -147,20 +150,30 @@ export default function AddRecipeForm() {
                 Cooking time
                 <div>
                   <input
-                    value={cookingTime}
-                    onChange={(e) => setCookingTime(e.target.value)}
+                    value={cookingTime.time}
+                    onChange={(e) =>
+                      setCookingTime({ ...cookingTime, time: e.target.value })
+                    }
                     placeholder="0"
                     maxLength={3}
-                    className="mt-1 focus:border-szppurple/80 rounded outline-none max-w-[3rem] border w-full"
+                    className="mt-1 focus:border-szppurple/80 rounded-l outline-none max-w-[3rem] max-h-[30px] h-full  w-full p-1  border-2"
                   />
-                  <select className="h-full">
+                  <select
+                    className="h-[90%] bg-stone-100 rounded-r p-1"
+                    onChange={(e) => {
+                      setCookingTime({
+                        ...cookingTime,
+                        timeType: e.target.value,
+                      });
+                    }}
+                  >
                     <option value="minutes">minutes</option>
                     <option value="hours">hours</option>
                   </select>
                 </div>
               </label>
             </div>
-            <div className="mb-4 lg:max-w-[18rem] w-full ">
+            <div className="mb-4 lg:max-w-[250px] w-full ">
               <label>
                 Ingredients
                 <ul>
@@ -174,7 +187,7 @@ export default function AddRecipeForm() {
                             }
                           }}
                           type="text"
-                          className=" focus:border-szppurple/80 rounded-l outline-none border w-full"
+                          className=" focus:border-szppurple/80 rounded-l outline-none w-full p-0.5  border-2"
                           onChange={(e) => handleValueChange(index, e)}
                           value={ingredient.ingredient}
                           ref={
@@ -184,7 +197,7 @@ export default function AddRecipeForm() {
                         <button
                           type="button"
                           onClick={(e) => handleDeleteInput(e, index)}
-                          className="px-4 bg-szpgray rounded-r"
+                          className="px-4 bg-stone-100 rounded-r"
                         >
                           <RiCloseLine />
                         </button>
@@ -195,7 +208,7 @@ export default function AddRecipeForm() {
                 <button
                   onClick={() => handleAddInput(0)}
                   type="button"
-                  className="rounded bg-szpgray w-full"
+                  className="rounded bg-stone-100 w-full p-0.5"
                 >
                   add ingredient
                 </button>
@@ -209,7 +222,7 @@ export default function AddRecipeForm() {
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
                 type="text"
-                className="mt-1 focus:border-szppurple/80 rounded resize-none border min-h-[5rem] w-full"
+                className="mt-1 focus:border-szppurple/80 rounded resize-none outline-none min-h-[5rem] w-full p-1 border-2 "
               />
             </label>
           </div>
@@ -218,10 +231,23 @@ export default function AddRecipeForm() {
         <div className="mb-2 "></div>
         <button
           type="submit"
-          className="hover:bg-szpgreen rounded bg-szppurple text-white w-full border p-2 px-8 "
+          className=" rounded min-h-[40px] bg-szppurple text-white w-full border p-2 px-8 "
           onClick={() => handleSubmit()}
         >
           Submit
+        </button>
+        <button
+          onClick={() => {
+            console.log("🚀 ~ AddRecipeForm ~ title:", title);
+            console.log("🚀 ~ AddRecipeForm ~ description:", description);
+            console.log("🚀 ~ AddRecipeForm ~ imageUrl:", imageUrl);
+            console.log("🚀 ~ AddRecipeForm ~ ingredients:", ingredients);
+            console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
+            console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);
+          }}
+          className="bg-yellow-200 rounded"
+        >
+          check values
         </button>
       </form>
     </>

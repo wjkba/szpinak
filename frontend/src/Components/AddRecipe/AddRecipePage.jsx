@@ -5,9 +5,8 @@ export default function AddRecipePage() {
   return (
     <>
       <Navbar color="white" />
-      <div className="grid lg:bg-szpgray place-items-center ">
-        <div className="w-full lg:bg-szpgray h-screen lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
-          <h1 className="lg:text-5xl text-4xl mb-4">Add recipe</h1>
+      <div className="grid place-items-center ">
+        <div className="w-full  h-screen lg:max-w-[1300px] max-w-[600px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
           <AddRecipeForm />
         </div>
       </div>

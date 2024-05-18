@@ -3,6 +3,8 @@ import { RiImageAddLine } from "react-icons/ri";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+// TODO: upload automatyczny po wybraniu pliku
+
 export default function DragDropImage({ setImageUrl }) {
   const [files, setFiles] = useState(null);
 
@@ -73,15 +75,15 @@ export default function DragDropImage({ setImageUrl }) {
         <div
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className="grid place-items-center min-h-[8rem] bg-szpgray w-full"
+          className="grid place-items-center min-h-[8rem] rounded border-2 w-full"
         >
           <div
             onClick={() => inputRef.current.click()}
             className="cursor-pointer grid place-items-center justify-center text-[#737578] rounded "
           >
             <RiImageAddLine size={32} className="mt-4 mb-2 " />
-            <p className="text-">drag & drop to upload</p>
-            <p>
+            <p className="text-sm">drag & drop to upload</p>
+            <p className="text-sm">
               or <u>select file</u>
             </p>
             <input type="file" onChange={handleSelect} hidden ref={inputRef} />

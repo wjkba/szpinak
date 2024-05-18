@@ -44,11 +44,11 @@ export default function Account() {
   return (
     <>
       <Navbar />
-      <div className="grid place-items-center ">
-        <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
+      <div className="grid place-items-center  ">
+        <div className="w-full  lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
           {!isLoading ? (
-            <div>
-              <div className=" flex gap-4 mb-6 items-center">
+            <div className="p-6 py-12  rounded shadow-md bg-white">
+              <div className=" flex gap-4 mb-6 items-center ">
                 <div
                   className={`${
                     isImageLoaded ? "hidden" : "visible"

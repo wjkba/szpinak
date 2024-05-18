@@ -26,8 +26,8 @@ export default function MyRecipesPage() {
       <Navbar />
       <div className="grid place-items-center ">
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
-          <h1 className="lg:text-5xl text-4xl mb-4">My recipes</h1>
-          <div className="sm:grid sm:grid-cols-2  lg:grid-cols-4">
+          <h1 className="text-3xl lg:text-4xl mb-4">My recipes</h1>
+          <div className="-translate-x-2 sm:grid sm:grid-cols-2  lg:grid-cols-4">
             {myRecipes.map((recipe) => (
               <RecipeCard
                 key={recipe.id}

@@ -11,7 +11,7 @@ class Recipe(BaseModel):
       views: int
       rating: int
       time: str
-      ingredients: str
+      ingredients: List[str]
       instructions: str
       date: str
 
@@ -20,7 +20,7 @@ class NewRecipe(BaseModel):
       image: str = Field(min_length=1)
       description: str = Field(min_length=1)
       time: str
-      ingredients: str
+      ingredients: List[str]
       instructions: str
       
 class User(BaseModel):
