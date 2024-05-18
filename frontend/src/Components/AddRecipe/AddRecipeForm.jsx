@@ -1,13 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import DragDropImage from "./DragDropImage";
+import axios from "axios";
 
 export default function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState([{ ingredient: "" }]);
   const [cookingTime, setCookingTime] = useState("");
   const [instructions, setInstructions] = useState("");
+
   const inputRef = useRef();
 
   const handleValueChange = (index, event) => {
@@ -15,6 +18,10 @@ export default function AddRecipeForm() {
     values[index].ingredient = event.target.value;
     setIngredients(values);
   };
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [ingredients]);
 
   const handleAddInput = (index) => {
     const values = [...ingredients];
@@ -32,21 +39,67 @@ export default function AddRecipeForm() {
     }
   };
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, [ingredients]);
+  const handleSubmit = () => {
+    if (title.trim() === "") {
+      console.log("Title is required");
+      return;
+    }
+    if (description.trim() === "") {
+      console.log("Description is required");
+      return;
+    }
+    if (imageUrl.trim() === "") {
+      console.log("Image URL is required");
+      return;
+    }
+    if (ingredients.some((ingredient) => ingredient.ingredient.trim() === "")) {
+      console.log("All ingredients must have a value");
+      return;
+    }
+    if (cookingTime.trim() === "") {
+      console.log("Cooking time is required");
+      return;
+    }
+    if (instructions.trim() === "") {
+      console.log("Instructions are required");
+      return;
+    }
+    postRecipe();
+  };
+
+  const postRecipe = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/recipe",
+        {
+          title: title,
+          image: imageUrl,
+          description: description,
+          time: "20 mins",
+          ingredients: "marchewka",
+          instructions: instructions,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       <button
         onClick={() => {
-          console.log(
-            title,
-            description,
-            ingredients,
-            cookingTime,
-            instructions
-          );
+          console.log("🚀 ~ AddRecipeForm ~ title:", title);
+          console.log("🚀 ~ AddRecipeForm ~ description:", description);
+          console.log("🚀 ~ AddRecipeForm ~ imageUrl:", imageUrl);
+          console.log("🚀 ~ AddRecipeForm ~ ingredients:", ingredients);
+          console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
+          console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);
         }}
         className="bg-yellow-200 rounded"
       >
@@ -61,7 +114,7 @@ export default function AddRecipeForm() {
         <div className="flex flex-col ">
           <div className="grid lg:flex mb-4 gap-2 ">
             <div className="flex  w-full lg:max-w-[18rem] order-3 lg:order-none">
-              <DragDropImage />
+              <DragDropImage setImageUrl={setImageUrl} />
             </div>
             <div>
               <div className="mb-2 ">
@@ -166,6 +219,7 @@ export default function AddRecipeForm() {
         <button
           type="submit"
           className="hover:bg-szpgreen rounded bg-szppurple text-white w-full border p-2 px-8 "
+          onClick={() => handleSubmit()}
         >
           Submit
         </button>

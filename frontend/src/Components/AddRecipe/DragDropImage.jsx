@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";
+import PropTypes from "prop-types";
 import axios from "axios";
 
-export default function DragDropImage() {
+export default function DragDropImage({ setImageUrl }) {
   const [files, setFiles] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+
   const inputRef = useRef();
 
   const imageData = new FormData();
@@ -42,6 +43,7 @@ export default function DragDropImage() {
           },
         }
       );
+      console.log(response);
       const file_url = response.data.file_url;
       setImageUrl(file_url);
     } catch (error) {
@@ -53,7 +55,11 @@ export default function DragDropImage() {
     return (
       <div className="grid place-items-center min-h-[8rem] bg-szpgray w-full">
         <div className="flex flex-col justify-center  max-w-[10rem]">
-          <button className="bg-pink-200 p-2 mb-2" onClick={handleImageUpload}>
+          <button
+            type="button"
+            className="bg-pink-200 p-2 mb-2"
+            onClick={handleImageUpload}
+          >
             upload
           </button>
           <p>{files[0].name}</p>
@@ -85,3 +91,7 @@ export default function DragDropImage() {
     </>
   );
 }
+
+DragDropImage.propTypes = {
+  setImageUrl: PropTypes.func.isRequired,
+};

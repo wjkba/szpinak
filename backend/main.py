@@ -56,10 +56,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # UPLOAD IMAGE
 @app.post("/upload/recipe-image")
 async def create_upload_recipe(file: UploadFile = File(...)): #current_user = Depends(get_current_user)
-  FILEPATH = "./static/images"
+  FILEPATH = "./static/images/"
   filename = file.filename
   extension = filename.split(".")[1]
-  if extension not in ["png", "jpg"]:
+  if extension not in ["png", "jpg", "jpeg"]:
     raise HTTPException(status_code=404, detail="File extension not allowed")
   
   # Tworzenie nazwy pliku
@@ -72,11 +72,11 @@ async def create_upload_recipe(file: UploadFile = File(...)): #current_user = De
 
   # Pillow
   img = Image.open(generated_name)
-  img = img.resize(size= (600,200))
+  img = img.resize(size= (600,400))
   img.save(generated_name)
   file.close()
 
-  file_url = "localhost:8000" + generated_name[1:]
+  file_url = "http://localhost:8000" + generated_name[1:]
 
   return {"file_url": file_url}
 
