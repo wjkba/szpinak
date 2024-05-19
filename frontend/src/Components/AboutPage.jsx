@@ -2,10 +2,10 @@ import Navbar from "./Navbar";
 export default function AboutPage() {
   return (
     <>
-      <Navbar />
+      <Navbar active="about" />
       <div className="grid place-items-center ">
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
-          <h1 className="lg:text-5xl text-4xl mb-4">about</h1>
+          <h1 className="lg:text-4xl text-3xl mb-4">about</h1>
           <p className="lg:text-lg lg:max-w-[600px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
             vehicula, massa in porta vehicula, odio justo ornare nibh, vel

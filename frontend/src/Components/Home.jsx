@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ScrollRestoration } from "react-router-dom";
+import Footer from "./Footer";
 
 export default function Home() {
   // TODO: recipes powinny byc pobierane raz przy wejscu do aplikacji
@@ -66,7 +67,7 @@ export default function Home() {
             </div>
           </section>
           <section id="newest" className="mb-12">
-            <h2 className="text-2xl font mb-2">Newest recipes:</h2>
+            <h2 className="text-2xl mb-2">Newest recipes:</h2>
             {loading ? (
               <div>Loading</div>
             ) : (
@@ -83,6 +84,7 @@ export default function Home() {
           </section>
         </div>
       </div>
+
       <ScrollRestoration />
     </div>
   );

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 export default function RecipeCard({ title, image, rating, time, id }) {
   return (
-    <div className="hover:scale-95 lg:text-lg  scale-90 transition-transform cursor-pointer shadow-md rounded-md">
+    <div className="hover:scale-95 lg:text-lg bg-white scale-90 transition-transform cursor-pointer shadow-md rounded-md">
       <Link className="" to={`/recipe/${id}`}>
         <div className="row-span-3">
           <img
@@ -15,7 +15,7 @@ export default function RecipeCard({ title, image, rating, time, id }) {
           />
         </div>
         <div className="flex flex-col justify-end p-2 pt-2">
-          <p className="truncate font-bold mb-1">{title}</p>
+          <p className="truncate font-semibold mb-1">{title}</p>
           <div className="flex gap-[2px] mb-2">
             {displayRating(rating, "text-szpgreen text-base")}
           </div>

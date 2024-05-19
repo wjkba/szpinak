@@ -1,9 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import DragDropImage from "./DragDropImage";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AddRecipeForm() {
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, []);
+
+  const checkIfLoggedIn = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://127.0.0.1:8000/verify-token/${token}`
+      );
+      if (response.data.message === "verified") {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      navigate("/");
+    }
+  };
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -14,6 +37,17 @@ export default function AddRecipeForm() {
   });
   const [instructions, setInstructions] = useState("");
 
+  const errorsDefault = {
+    title: { error: false, message: "" },
+    description: { error: false, message: "" },
+    ingredients: { error: false, message: "" },
+    cookingTime: { error: false, message: "" },
+    instructions: { error: false, message: "" },
+  };
+  const [errors, setErrors] = useState(errorsDefault);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const inputRef = useRef();
 
   const handleValueChange = (index, event) => {
@@ -23,7 +57,11 @@ export default function AddRecipeForm() {
   };
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
+    return () => {};
   }, [ingredients]);
 
   const handleAddInput = (index) => {
@@ -43,31 +81,45 @@ export default function AddRecipeForm() {
   };
 
   const handleSubmit = () => {
+    let newErrors = { ...errorsDefault };
     if (title.trim() === "") {
       console.log("Title is required");
-      return;
+      newErrors.title.error = true;
+      newErrors.title.message = "Title is required";
     }
     if (description.trim() === "") {
       console.log("Description is required");
-      return;
+      newErrors.description.error = true;
+      newErrors.description.message = "Description is required";
     }
     if (imageUrl.trim() === "") {
       console.log("Image URL is required");
-      return;
     }
     if (ingredients.some((ingredient) => ingredient.ingredient.trim() === "")) {
       console.log("All ingredients must have a value");
-      return;
+      newErrors.ingredients.error = true;
+      newErrors.ingredients.message = "All ingredients must have a value";
     }
     if (cookingTime.time.trim() === "") {
       console.log("Cooking time is required");
-      return;
+      newErrors.cookingTime.error = true;
+      newErrors.cookingTime.message = "Cooking time is required";
     }
     if (instructions.trim() === "") {
       console.log("Instructions are required");
-      return;
+      newErrors.instructions.error = true;
+      newErrors.instructions.message = "Instructions are required";
     }
-    postRecipe();
+    setErrors(newErrors);
+    if (
+      !newErrors.title.error &&
+      !newErrors.description.error &&
+      !newErrors.cookingTime.error &&
+      !newErrors.ingredients.error &&
+      !newErrors.instructions.error
+    ) {
+      postRecipe();
+    }
   };
 
   const postRecipe = async () => {
@@ -88,6 +140,7 @@ export default function AddRecipeForm() {
         }
       );
       console.log(response);
+      setIsSubmitted(true);
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +155,18 @@ export default function AddRecipeForm() {
     return formattedArray;
   };
 
-  // TODO: napraw background i zmien wyglad
+  if (isLoading) {
+    return <div>loading..</div>;
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="rounded shadow-md bg-white lg:p-8 max-w-[600px] p-4 w-full">
+        <p>Recipe has been added!</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <form
@@ -122,7 +186,7 @@ export default function AddRecipeForm() {
             <div className="add-recipe-form">
               <div className="mb-2 ">
                 <label>
-                  Title
+                  <span className="font-medium">Title</span>
                   <input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -130,10 +194,15 @@ export default function AddRecipeForm() {
                     className="mt-1 focus:border-szppurple/80 rounded outline-none  w-full p-1 min-h-[30px] border-2"
                   />
                 </label>
+                {errors.title.error && (
+                  <div className="text-red-500 text-sm">
+                    {errors.title.message}
+                  </div>
+                )}
               </div>
               <div>
                 <label>
-                  Description
+                  <span className="font-medium">Description</span>
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -141,13 +210,18 @@ export default function AddRecipeForm() {
                     className="mt-1 focus:border-szppurple/80 rounded resize-none outline-none min-h-[5rem] w-full p-1  border-2"
                   />
                 </label>
+                {errors.description.error && (
+                  <div className="text-red-500 text-sm">
+                    {errors.description.message}
+                  </div>
+                )}
               </div>
             </div>
           </div>
           <div className="lg:flex gap-6">
             <div className="lg:order-2 mb-2">
               <label className="grid">
-                Cooking time
+                <span className="font-medium">Cooking time</span>
                 <div>
                   <input
                     value={cookingTime.time}
@@ -172,10 +246,15 @@ export default function AddRecipeForm() {
                   </select>
                 </div>
               </label>
+              {errors.cookingTime.error && (
+                <div className="text-red-500 text-sm">
+                  {errors.cookingTime.message}
+                </div>
+              )}
             </div>
             <div className="mb-4 lg:max-w-[250px] w-full ">
               <label>
-                Ingredients
+                <span className="font-medium">Ingredients</span>
                 <ul>
                   {ingredients.map((ingredient, index) => (
                     <li key={index}>
@@ -213,11 +292,16 @@ export default function AddRecipeForm() {
                   add ingredient
                 </button>
               </label>
+              {errors.ingredients.error && (
+                <div className="text-red-500 text-sm">
+                  {errors.ingredients.message}
+                </div>
+              )}
             </div>
           </div>
           <div className="mb-2">
             <label>
-              Instructions
+              <span className="font-medium">Instructions</span>
               <textarea
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
@@ -225,6 +309,11 @@ export default function AddRecipeForm() {
                 className="mt-1 focus:border-szppurple/80 rounded resize-none outline-none min-h-[5rem] w-full p-1 border-2 "
               />
             </label>
+            {errors.instructions.error && (
+              <div className="text-red-500 text-sm">
+                {errors.instructions.message}
+              </div>
+            )}
           </div>
         </div>
 
@@ -245,7 +334,7 @@ export default function AddRecipeForm() {
             console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
             console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);
           }}
-          className="bg-yellow-200 rounded"
+          className="bg-yellow-100 text-sm rounded"
         >
           check values
         </button>

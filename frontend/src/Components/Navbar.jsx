@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
 import PropTypes from "prop-types";
 
-function Navbar({ color = "white" }) {
+function Navbar({ color = "white", active = null }) {
   const [isMenu, setIsMenu] = useState(false);
   const { isLoggedIn } = useAuth();
   function handleToggleMenu() {
@@ -29,18 +29,28 @@ function Navbar({ color = "white" }) {
             <i className="fa-solid fa-bars fa-lg"></i>
           </div>
           <div className="hidden text-xl lg:flex items-center gap-8">
-            <Link to="/recipes" className="hover:font-medium cursor-pointer">
+            <Link
+              to="/recipes"
+              className={`${
+                active == "recipes" ? "font-medium" : ""
+              } hover:font-medium cursor-pointer`}
+            >
               recipes
             </Link>
             {/* <p className="hover:font-medium cursor-pointer">popular</p> */}
-            <Link to="/about" className="hover:font-medium cursor-pointer">
+            <Link
+              to="/about"
+              className={`${
+                active == "about" ? "font-medium" : ""
+              } hover:font-medium cursor-pointer`}
+            >
               about
             </Link>
             <Link
               to={isLoggedIn ? "/account" : "/login"}
-              className="hover:font-medium cursor-pointer"
+              className="cursor-pointer"
             >
-              <FaRegUser className="min-w-[2rem]" size={20} />
+              <FaRegUser className=" min-w-[2rem]" size={20} />
             </Link>
           </div>
         </div>
@@ -53,4 +63,5 @@ export default Navbar;
 
 Navbar.propTypes = {
   color: PropTypes.string,
+  active: PropTypes.string,
 };

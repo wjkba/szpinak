@@ -17,10 +17,10 @@ export default function RecipesPage() {
   }
   return (
     <>
-      <Navbar />
+      <Navbar active="recipes" />
       <div className="grid place-items-center ">
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
-          <h1 className="lg:text-5xl text-4xl mb-8 pl-5 sm:pl-2">recipes</h1>
+          <h1 className="lg:text-4xl text-3xl mb-8 pl-4 sm:pl-2">recipes</h1>
           <div className="sm:grid sm:grid-cols-2  lg:grid-cols-4">
             {recipes.map((recipe) => (
               <RecipeCard

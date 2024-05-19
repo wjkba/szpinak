@@ -38,7 +38,7 @@ export default function Login() {
       <Navbar />
 
       {!isLoading ? (
-        <div className="grid place-items-center  lg:mt-[6rem]">
+        <div className="grid place-items-center  lg:mt-[2rem]">
           <div className=" rounded gird place-content-center  w-full  p-4">
             <div className="grid place-items-center ">
               <LoginForm />
