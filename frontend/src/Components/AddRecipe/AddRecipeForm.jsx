@@ -29,13 +29,14 @@ export default function AddRecipeForm() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState([])
   const [ingredients, setIngredients] = useState([{ ingredient: "" }]);
   const [cookingTime, setCookingTime] = useState({
     time: "20",
     timeType: "minutes",
   });
   const [instructions, setInstructions] = useState("");
+  const imageData = new FormData();
 
   const errorsDefault = {
     title: { error: false, message: "" },
@@ -80,7 +81,7 @@ export default function AddRecipeForm() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     let newErrors = { ...errorsDefault };
     if (title.trim() === "") {
       console.log("Title is required");
@@ -92,9 +93,7 @@ export default function AddRecipeForm() {
       newErrors.description.error = true;
       newErrors.description.message = "Description is required";
     }
-    if (imageUrl.trim() === "") {
-      console.log("Image URL is required");
-    }
+
     if (ingredients.some((ingredient) => ingredient.ingredient.trim() === "")) {
       console.log("All ingredients must have a value");
       newErrors.ingredients.error = true;
@@ -118,11 +117,36 @@ export default function AddRecipeForm() {
       !newErrors.ingredients.error &&
       !newErrors.instructions.error
     ) {
-      postRecipe();
+      console.log(image)
+      const imageUrl = await handleImageUpload()
+      console.log(imageUrl) 
+      await postRecipe(imageUrl)
     }
   };
 
-  const postRecipe = async () => {
+    const handleImageUpload = async () => {
+    imageData.append("file", image[0]);
+    console.log(imageData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/upload/recipe-image",
+        imageData,
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+      const file_url = response.data.file_url;
+      return file_url
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const postRecipe = async (imageUrl) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
@@ -181,7 +205,7 @@ export default function AddRecipeForm() {
           </h1>
           <div className="grid lg:flex mb-4 gap-2 ">
             <div className="flex  w-full lg:max-w-[250px] order-3 lg:order-none">
-              <DragDropImage setImageUrl={setImageUrl} />
+              <DragDropImage setImage={setImage} />
             </div>
             <div className="add-recipe-form">
               <div className="mb-2 ">
@@ -329,7 +353,6 @@ export default function AddRecipeForm() {
           onClick={() => {
             console.log("🚀 ~ AddRecipeForm ~ title:", title);
             console.log("🚀 ~ AddRecipeForm ~ description:", description);
-            console.log("🚀 ~ AddRecipeForm ~ imageUrl:", imageUrl);
             console.log("🚀 ~ AddRecipeForm ~ ingredients:", ingredients);
             console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
             console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);

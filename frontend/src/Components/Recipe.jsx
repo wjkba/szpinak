@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Navbar from "./Navbar";
 import { useNavigate, useParams, ScrollRestoration } from "react-router-dom";
 import { displayRating } from "./utils";
@@ -47,7 +48,7 @@ export default function Recipe() {
         setIsSaved(true);
       }
     } catch (error) {
-      console.log(error);
+      return
     }
   };
 

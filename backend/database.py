@@ -33,8 +33,9 @@ async def fetch_all_recipes():
   recipes = []
   cursor = recipes_collection.find({})
   async for document in cursor:
-    recipes.append(Recipe(**document))
+    recipes.append(Recipe(**document))  
   return recipes
+
 
 
 async def fetch_newest_recipes(n):
