@@ -20,7 +20,7 @@ export default function LoginForm() {
     form_data.append("password", data.password);
     try {
       const response = await axios.post(
-        "http://localhost:8000/token",
+        "http://localhost:8000/api/token",
         form_data
       );
       console.log(response);

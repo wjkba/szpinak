@@ -17,7 +17,7 @@ export default function MyRecipesPage() {
       );
       setMyRecipes(response.data);
     } catch (error) {
-      console.log(error);
+      console.log("please log in")
     }
   };
 
@@ -27,6 +27,7 @@ export default function MyRecipesPage() {
       <div className="grid place-items-center ">
         <div className="w-full lg:max-w-[1300px] max-w-[450px] px-4 py-[40px] lg:px-[120px] lg:py-[80px]">
           <h1 className="text-3xl lg:text-4xl mb-4">My recipes</h1>
+          {myRecipes.length == 0 ? <div className="mt-8 lg:text-center text-xl lg:text-2xl">{`You don't have any recipes yet.`}</div>: ""}
           <div className="-translate-x-2 sm:grid sm:grid-cols-2  lg:grid-cols-4">
             {myRecipes.map((recipe) => (
               <RecipeCard

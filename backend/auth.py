@@ -18,10 +18,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = "7d6477978d331618e4316253809d5b1663a10295fc113b6725debe07cf31b712"
 ALGORITHM = "HS256"
 
-@router.get("/verify-token/{token}")
-async def test(token: str):
-  user = await get_current_user(token=token)
-  return {"message": "verified", "username": user["username"]}
+
 
 
 
@@ -41,7 +38,7 @@ def get_password_hash(password): # HASHOWANIE HASŁA
 # logowania tak dlugo jak token jest wazny
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-@router.get("/v")
+@router.get("/api/v", tags=["Login"])
 # pytamy czy klient ma token, jesli ma to dajemy dostęp do endpointa
 # jeśli klient nie ma tokena to idź do tokenUrl
 async def validate_token(token: str = Depends(oauth2_scheme)): 
@@ -54,7 +51,12 @@ async def authenticate_user(username, password):
     return password_check
   return False
 
-@router.post("/token")
+@router.get("/api/verify-token/{token}", tags=["Login"])
+async def verify_token(token: str):
+  user = await get_current_user(token=token)
+  return {"message": "verified", "username": user["username"]}
+
+@router.post("/api/token", tags=["Login"])
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
   username = form_data.username
   password = form_data.password

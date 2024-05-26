@@ -6,7 +6,7 @@ export async function checkToken() {
 
   try {
     const response = await axios.get(
-      `http://localhost:8000/verify-token/${token}`
+      `http://localhost:8000/api/verify-token/${token}`
     );
     console.log(response.data.message);
   } catch (error) {

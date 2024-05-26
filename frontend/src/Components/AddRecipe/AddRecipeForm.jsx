@@ -17,7 +17,7 @@ export default function AddRecipeForm() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://127.0.0.1:8000/verify-token/${token}`
+        `http://127.0.0.1:8000/api/verify-token/${token}`
       );
       if (response.data.message === "verified") {
         setIsLoading(false);
@@ -129,7 +129,7 @@ export default function AddRecipeForm() {
     console.log(imageData);
     try {
       const response = await axios.post(
-        "http://localhost:8000/upload/recipe-image",
+        "http://localhost:8000/api/upload/recipe-image",
         imageData,
         {
           headers: {
@@ -348,18 +348,6 @@ export default function AddRecipeForm() {
           onClick={() => handleSubmit()}
         >
           Submit
-        </button>
-        <button
-          onClick={() => {
-            console.log("🚀 ~ AddRecipeForm ~ title:", title);
-            console.log("🚀 ~ AddRecipeForm ~ description:", description);
-            console.log("🚀 ~ AddRecipeForm ~ ingredients:", ingredients);
-            console.log("🚀 ~ AddRecipeForm ~ cookingTime:", cookingTime);
-            console.log("🚀 ~ AddRecipeForm ~ instructions:", instructions);
-          }}
-          className="bg-yellow-100 text-sm rounded"
-        >
-          check values
         </button>
       </form>
     </>

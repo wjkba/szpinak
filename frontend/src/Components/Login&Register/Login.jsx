@@ -18,7 +18,7 @@ export default function Login() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://127.0.0.1:8000/verify-token/${token}`
+        `http://127.0.0.1:8000/api/verify-token/${token}`
       );
       if (response.data.message === "verified") {
         setIsLoggedIn(true);

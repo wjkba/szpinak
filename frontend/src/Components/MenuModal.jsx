@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useAuth } from "../Context/AuthContext";
 
 export default function MenuModal({ handleToggleMenu }) {
+  const { isLoggedIn } = useAuth();
   return (
     <div className=" top-0 fixed z-50 w-screen h-screen bg-szpgray">
       <div className="mb-12">
@@ -25,7 +27,7 @@ export default function MenuModal({ handleToggleMenu }) {
             about
           </Link>
           <Link to="/login" className="hover:font-medium cursor-pointer">
-            login
+            {isLoggedIn ? "account" : "login"}
           </Link>
         </div>
       </div>

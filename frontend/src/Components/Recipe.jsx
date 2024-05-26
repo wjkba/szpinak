@@ -36,7 +36,7 @@ export default function Recipe() {
   const fetchSavedRecipes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:8000/saved-recipes`, {
+      const response = await axios.get(`http://localhost:8000/api/saved-recipes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const saved_recipes = response.data;
