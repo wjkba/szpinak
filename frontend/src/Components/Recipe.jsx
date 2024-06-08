@@ -8,10 +8,13 @@ import { FaShare } from "react-icons/fa";
 import { FaPrint } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useAuth } from "../Context/AuthContext";
 
 export default function Recipe() {
+  const {isLoggedIn} = useAuth()
   const [isSaved, setIsSaved] = useState(false);
   const [recipe, setRecipe] = useState([]);
+  const [ingredients, setIngredients] = useState([])
   const navigate = useNavigate();
   const params = useParams();
   const recipeId = Number(params.recipeId);
@@ -19,7 +22,7 @@ export default function Recipe() {
 
   useEffect(() => {
     fetchRecipe();
-    fetchSavedRecipes();
+    if(isLoggedIn)fetchSavedRecipes() 
   }, []);
 
   const fetchRecipe = async () => {
@@ -28,10 +31,12 @@ export default function Recipe() {
         `http://127.0.0.1:8000/api/recipe/${recipeId}`
       );
       setRecipe(...response.data);
+      setIngredients(response.data[0].ingredients)
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const fetchSavedRecipes = async () => {
     try {
@@ -40,7 +45,6 @@ export default function Recipe() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const saved_recipes = response.data;
-      console.log(response.data);
       let isRecipeSaved = saved_recipes.some(
         (recipe) => recipe.id === parseInt(recipeId)
       );
@@ -137,17 +141,7 @@ export default function Recipe() {
                 Ingredients
               </h2>
               <ul className="list-disc pl-4 lg:text-lg">
-                <li>8 oz (225g) pasta (such as penne or fusilli)</li>
-                <li>2 tablespoons olive oil</li>
-                <li>3 cloves garlic, minced</li>
-                <li>1 small onion, finely chopped</li>
-                <li>8 oz (225g) mushrooms, sliced</li>
-                <li>4 cups fresh spinach, washed and chopped</li>
-                <li>1 cup heavy cream</li>
-                <li>1/2 cup grated Parmesan cheese</li>
-                <li>Salt and pepper to taste</li>
-                <li>Red pepper flakes (optional, for added heat)</li>
-                <li>Fresh parsley, chopped (for garnish)</li>
+                {ingredients.map((ingredient, i)=> (<li key={i}>{ingredient}</li>))}
               </ul>
             </div>
           </section>
