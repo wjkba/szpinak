@@ -1,43 +1,33 @@
 import Carousel from "./Carousel";
-
 import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useMemo } from "react";
 import { ScrollRestoration } from "react-router-dom";
-import Footer from "./Footer";
+import { useRecipesContext } from "../Context/RecipesContext";
 
 export default function Home() {
-  // TODO: recipes powinny byc pobierane raz przy wejscu do aplikacji
-  // TODO: zmniejsz ilosc requestow
+  const { recipes, loading, error } = useRecipesContext();
 
-  const apiUrl = "http://localhost:8000/api";
+  const newestRecipes = useMemo(
+    () => [...recipes].sort((a, b) => new Date(b.date) - new Date(a.date)),
+    [recipes]
+  );
+  const popularRecipes = useMemo(
+    () => [...recipes].sort((a, b) => b.views - a.views),
+    [recipes]
+  );
+  const randomRecipes = useMemo(
+    () => chooseRandomElements(recipes, 5),
+    [recipes]
+  );
 
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
-
-  let newest_recipes = [...recipes].sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
-  const popular_recipes = [...recipes].sort((a, b) => b.views - a.views);
-  const random_recipes = chooseRandomElements(recipes, 5);
-
-  // fetch recipes from szpinak_db
-  const fetchRecipes = async () => {
-    setLoading(true);
-    try {
-      const recipesResponse = await axios.get(`${apiUrl}/recipes`);
-      console.log(recipesResponse);
-      setRecipes(recipesResponse.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
+  const RenderCarousel = (recipe_array) => {
+    if (loading) {
+      return <p>Loading...</p>;
     }
-    console.log();
+    if (error) {
+      return <p>{error}</p>;
+    }
+    return <Carousel recipes={recipe_array} />;
   };
 
   return (
@@ -68,28 +58,24 @@ export default function Home() {
           </section>
           <section id="newest" className="mb-12">
             <h2 className="text-2xl mb-2">Newest recipes:</h2>
-            {loading ? (
-              <div>Loading</div>
-            ) : (
-              <Carousel recipes={newest_recipes} />
-            )}
+            {RenderCarousel(newestRecipes)}
           </section>
           <section id="popular" className="mb-12">
             <h2 className="text-2xl mb-2">Trending recipes:</h2>
-            <Carousel recipes={popular_recipes} />
+            {RenderCarousel(popularRecipes)}
           </section>
           <section id="recipes" className="">
             <h2 className="text-2xl mb-2">Recipes:</h2>
-            <Carousel recipes={random_recipes} />
+            {RenderCarousel(randomRecipes)}
           </section>
         </div>
       </div>
-
       <ScrollRestoration />
     </div>
   );
-  function chooseRandomElements(list, numElements) {
-    const shuffled = list.sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, numElements);
-  }
+}
+
+function chooseRandomElements(list, numElements) {
+  const shuffled = list.sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, numElements);
 }

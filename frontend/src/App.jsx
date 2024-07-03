@@ -15,6 +15,7 @@ import Account from "./Components/Account.jsx";
 import SavedRecipesPage from "./Components/SavedRecipes/SavedRecipesPage.jsx";
 import MyRecipesPage from "./Components/MyRecipes/MyRecipesPage.jsx";
 import AddRecipePage from "./Components/AddRecipe/AddRecipePage.jsx";
+import { RecipesContextProvider } from "./Context/RecipesContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,7 +69,9 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <RouterProvider router={router}></RouterProvider>
+        <RecipesContextProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </RecipesContextProvider>
       </AuthProvider>
     </>
   );
